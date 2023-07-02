@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/", upload.single("image"), (req, res, next) => {
+app.post("/add", upload.single("image"), (req, res, next) => {
   var obj = {
     name: req.body.name,
     desc: req.body.desc,
