@@ -66,7 +66,7 @@ app.post("/", upload.single("image"), (req, res, next) => {
   });
 });
 
-var port = process.env.PORT || "3000";
+var port = process.env.PORT || "4000";
 app.listen(port, (err) => {
   if (err) throw err;
   console.log("Server listening on port", port);
