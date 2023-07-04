@@ -2,13 +2,15 @@ import React from "react";
 import { classNames } from "../utils/Classname";
 import SearchBar from "../component/SearchBar";
 import Text from "../component/Text";
-import {PiDotsThreeVertical} from "react-icons/pi"
+import { PiDotsThreeVertical } from "react-icons/pi";
 import { BsCart3 } from "react-icons/bs";
-import {PiUserBold} from "react-icons/pi"
-import {CiShop} from "react-icons/ci"
-import {BiChevronDown} from "react-icons/bi"
+import { PiUserBold } from "react-icons/pi";
+import { CiShop } from "react-icons/ci";
+import { BiChevronDown } from "react-icons/bi";
+import { useRouter } from "next/router";
 
 export default function TopBar({ navColor }) {
+  const router = useRouter();
   return (
     <div
       className={classNames(
@@ -17,7 +19,12 @@ export default function TopBar({ navColor }) {
       )}
     >
       <div className="flex items-center gap-[50px]">
-        <div className="flex flex-col ">
+        <div
+          className="flex flex-col cursor-pointer"
+          onClick={() => {
+            router.push("/admin");
+          }}
+        >
           <Text
             name={"MrJkart"}
             customClass={"text-[#2a55e5] font-bold italic text-xl pl-2"}
@@ -36,7 +43,7 @@ export default function TopBar({ navColor }) {
         </div>
       </div>
       <div className="flex items-center justify-between h-[100%] w-[490px] ">
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2 cursor-pointer">
           <div className="text-[25px]">
             <CiShop />
           </div>
@@ -45,7 +52,7 @@ export default function TopBar({ navColor }) {
             customClass={"text-md font-semibold "}
           />
         </div>
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2 cursor-pointer">
           <div className="text-[25px]">
             <PiUserBold />
           </div>
@@ -54,7 +61,7 @@ export default function TopBar({ navColor }) {
             <BiChevronDown />
           </div>
         </div>
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2 cursor-pointer">
           <div className="text-[25px]">
             <BsCart3 />
           </div>
