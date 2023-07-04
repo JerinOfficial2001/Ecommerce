@@ -1,4 +1,23 @@
 import ImageSrc from "../component/ImageSrc";
+import Slide1 from "../assets/slide1.png";
+import Slide2 from "../assets/slide2.png";
+import Slide3 from "../assets/slide3.png";
+import Slide4 from "../assets/slide4.png";
+
+export const SLIDES = [
+  {
+    img: Slide1,
+  },
+  {
+    img: Slide2,
+  },
+  {
+    img: Slide3,
+  },
+  {
+    img: Slide4,
+  },
+];
 
 export const OPTIONS = [
   {
@@ -80,4 +99,3 @@ export const ARRAY_OPTIONS = [
     to: "none",
   },
 ];
-

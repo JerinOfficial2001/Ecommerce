@@ -60,7 +60,9 @@ export default function admin() {
         spec: "",
         array: "",
       });
+      setproductImg("");
       console.log(inputDatas);
+      toast.success("Added Successfully");
     } else {
       toast.error("All fields are mandatory");
     }

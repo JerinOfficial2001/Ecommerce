@@ -1,3 +1,4 @@
+import { SLIDES } from "@/src/arrays/Array";
 import ImageSrc from "@/src/component/ImageSrc";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
@@ -10,6 +11,15 @@ import { useSelector } from "react-redux";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [index, setIndex] = useState(0);
+  const item = SLIDES[index];
+  const prevSlide = () => {
+    setIndex((index - 1) % SLIDES.length);
+  };
+
+  const nextSlide = () => {
+    setIndex((index + 1) % SLIDES.length);
+  };
   const { items: data } = useSelector((state) => state.products);
   const filterNavItems = (type) => {
     const filterdProducts = data?.filter((i) => i.array === type);
@@ -31,9 +41,15 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <ProductContainer divertor={true}>
+        <ProductContainer
+          divertor={true}
+          disabledRight={index === SLIDES.length}
+          disabledLeft={index === 0}
+          onClickLeft={prevSlide}
+          onClickRight={nextSlide}
+        >
           <div>
-            <ImageSrc src={require("../src/assets/slide1.png")} />
+            <ImageSrc src={item.img} />
           </div>
         </ProductContainer>
         <ProductContainer name={"Top Offers"}>

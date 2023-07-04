@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import productsReducer, { productsFetch } from "../src/redux/productsSlices";
 import { productsApi } from "@/src/redux/productsApi";
 
+
 export default function App({ Component, pageProps }) {
   const store = configureStore({
     reducer: {
