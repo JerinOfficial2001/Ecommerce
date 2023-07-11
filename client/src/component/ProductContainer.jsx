@@ -40,27 +40,27 @@ export default function ProductContainer({
       ) : (
         <>
           <div className=" w-[98%] flex flex-col items-center justify-center bg-white rounded-md p-2 cursor-pointer relative">
-            <button
+            {/* <button
               onClick={onClickBtnLeft}
               disabled={disabledBtnLeft}
               className="h-[90px] w-[40px] p-2 rounded-sm bg-white absolute left-1 top-[45%] flex items-center justify-center"
               style={{ boxShadow: "0px 0px 3px gray" }}
             >
               {"<"}
-            </button>
-            <button
+            </button> */}
+            {/* <button
               disabled={disabledBtnRight}
               onClick={onClickBtnRight}
               className="h-[90px] w-[40px] p-2 rounded-sm bg-white absolute right-1 top-[45%] flex items-center justify-center"
               style={{ boxShadow: "0px 0px 3px gray" }}
             >
               {">"}
-            </button>
+            </button> */}
             <div className=" w-[100%] h-[65px] flex justify-between items-center  gap-2  p-2 ">
               <Text name={name} customClass={"font-semibold text-[23px]"} />
               <CircleRightArrowIcon customClass={"text-[blue] text-[30px]"} />
             </div>
-            <div className=" w-[100%] flex items-center  gap-3 bg-white rounded-md p-2 pl-8">
+            <div className=" w-[100%] flex items-center justify-center bg-white p-2 ">
               {children}
             </div>
           </div>

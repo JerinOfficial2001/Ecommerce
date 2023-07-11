@@ -2,11 +2,13 @@ import { SLIDES } from "@/src/arrays/Array";
 import ImageSrc from "@/src/component/ImageSrc";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
+import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
 import Text from "@/src/component/Text";
 import Layout from "@/src/layout/Layout";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Slider from "react-slick";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +26,13 @@ export default function Home() {
   const filterNavItems = (type) => {
     const filterdProducts = data?.filter((i) => i.array === type);
     return filterdProducts;
+  };
+  const settings = {
+    infinite: true,
+    slidesToShow: 7,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
   return (
     <>
@@ -53,16 +62,22 @@ export default function Home() {
           </div>
         </ProductContainer>
         <ProductContainer name={"Top Offers"}>
-          {filterNavItems("Top Offers").map((i) => (
-            <ProductCard
-              key={i.id}
-              img={i.image.url}
-              price={i.price}
-              category={i.title}
-            />
-          ))}
+          <div className="h-[100%] w-[100%] ">
+            <Slider {...settings} >
+              {filterNavItems("Top Offers").map((i) => (
+                <ProductCard
+                  key={i.id}
+                  img={i.image.url}
+                  price={i.price}
+                  category={i.title}
+                />
+              ))}
+            </Slider>
+          </div>
         </ProductContainer>
         <ProductContainer name={"Today's Fashion Deals"}>
+          <div className="h-[100%] w-[100%] ">
+            <Slider {...settings} >
           {filterNavItems("Today's Fashion Deals").map((i) => (
             <ProductCard
               key={i.id}
@@ -70,7 +85,8 @@ export default function Home() {
               price={i.price}
               category={i.title}
             />
-          ))}
+          ))}</Slider>
+          </div>
         </ProductContainer>
       </Layout>
     </>
