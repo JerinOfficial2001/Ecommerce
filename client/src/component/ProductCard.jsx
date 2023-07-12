@@ -2,9 +2,9 @@ import React from "react";
 import ImageSrc from "./ImageSrc";
 import Text from "./Text";
 
-export default function ProductCard({ img, price, category }) {
+export default function ProductCard({ img, price, category ,onclick}) {
   return (
-    <div className="h-[250px] w-[200px] p-2 flex flex-col items-center justify-center gap-2 bg-white border-gray border-2 rounded-md">
+    <div className="h-[250px] w-[200px] p-2 flex flex-col items-center justify-center gap-2 bg-white border-gray border-2 rounded-md" onClick={onclick}>
       <div className=" w-[90%] h-[80%] flex items-center justify-center scale-[0.8] hover:scale-[0.9] p-2">
         <img src={img} alt="loading" />
       </div>

@@ -1,18 +1,23 @@
 import { SLIDES } from "@/src/arrays/Array";
 import ImageSrc from "@/src/component/ImageSrc";
+import LoginModal from "@/src/component/LoginModal";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
 import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
 import Text from "@/src/component/Text";
 import Layout from "@/src/layout/Layout";
+import { getProductsByID } from "@/src/redux/productsSlices";
 import { Inter } from "next/font/google";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [index, setIndex] = useState(0);
   const item = SLIDES[index];
   const prevSlide = () => {
@@ -61,12 +66,21 @@ export default function Home() {
             <ImageSrc src={item.img} />
           </div>
         </ProductContainer>
-        <ProductContainer name={"Top Offers"}>
+        <ProductContainer
+          name={"Top Offers"}
+          
+        >
           <div className="h-[100%] w-[100%] ">
-            <Slider {...settings} >
+            <Slider {...settings}>
               {filterNavItems("Top Offers").map((i) => (
                 <ProductCard
-                  key={i.id}
+                  onclick={() => {
+                    router.push({
+                      pathname: "/productPage",
+                      query: i,
+                    });
+                  }}
+                  key={i._id}
                   img={i.image.url}
                   price={i.price}
                   category={i.title}
@@ -77,15 +91,30 @@ export default function Home() {
         </ProductContainer>
         <ProductContainer name={"Today's Fashion Deals"}>
           <div className="h-[100%] w-[100%] ">
-            <Slider {...settings} >
-          {filterNavItems("Today's Fashion Deals").map((i) => (
-            <ProductCard
-              key={i.id}
-              img={i.image.url}
-              price={i.price}
-              category={i.title}
-            />
-          ))}</Slider>
+            <Slider {...settings}>
+              {filterNavItems("Today's Fashion Deals").map((i) => (
+                <ProductCard
+                  key={i._id}
+                  img={i.image.url}
+                  price={i.price}
+                  category={i.title}
+                />
+              ))}
+            </Slider>
+          </div>
+        </ProductContainer>
+        <ProductContainer name={"Best of Electronics"}>
+          <div className="h-[100%] w-[100%] ">
+            <Slider {...settings}>
+              {filterNavItems("Best of Electronics").map((i) => (
+                <ProductCard
+                  key={i._id}
+                  img={i.image.url}
+                  price={i.price}
+                  category={i.title}
+                />
+              ))}
+            </Slider>
           </div>
         </ProductContainer>
       </Layout>

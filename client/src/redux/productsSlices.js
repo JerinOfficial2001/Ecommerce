@@ -7,6 +7,7 @@ const initialState = {
   items: [],
   status: null,
   createStatus: null,
+  singleItem: [],
 };
 
 export const productsFetch = createAsyncThunk(
@@ -35,7 +36,13 @@ export const productsCreate = createAsyncThunk(
 const productsSlices = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    getProductsByID: (state, { payload }) => {
+      const id = payload;
+      const index = state.items?.find((i) => i.array === id);
+      state.singleItem = index;
+    },
+  },
   extraReducers: {
     [productsFetch.pending]: (state, action) => {
       state.status = "pending";
@@ -60,3 +67,4 @@ const productsSlices = createSlice({
   },
 });
 export default productsSlices.reducer;
+export const { getProductsByID } = productsSlices.actions;

@@ -94,6 +94,11 @@ export const ARRAY_OPTIONS = [
     to: "/todaysFashionDeals",
   },
   {
+    id: 10,
+    title: "Best of Electronics",
+    to: "BestofElectronics",
+  },
+  {
     id: 3,
     title: "none",
     to: "none",

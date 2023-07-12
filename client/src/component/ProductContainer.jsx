@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import Text from "./Text";
 import CircleRightArrowIcon from "./CircleRightArrowIcon";
+import { useRouter } from "next/router";
 
 export default function ProductContainer({
   children,
   divertor,
   name,
   disabledLeft,
-  disabledBtnLeft,
-  disabledBtnRight,
   disabledRight,
   onClickLeft,
   onClickRight,
-  onClickBtnLeft,
-  onClickBtnRight,
+  onClick,
 }) {
+  const router = useRouter();
   return (
     <>
       {divertor ? (
@@ -58,7 +57,10 @@ export default function ProductContainer({
             </button> */}
             <div className=" w-[100%] h-[65px] flex justify-between items-center  gap-2  p-2 ">
               <Text name={name} customClass={"font-semibold text-[23px]"} />
-              <CircleRightArrowIcon customClass={"text-[blue] text-[30px]"} />
+              <CircleRightArrowIcon
+                customClass={"text-[blue] text-[30px]"}
+                onclick={onClick}
+              />
             </div>
             <div className=" w-[100%] flex items-center justify-center bg-white p-2 ">
               {children}

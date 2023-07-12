@@ -52,6 +52,7 @@ export default function admin() {
           image: productImg,
         })
       );
+      setproductImg("");
       setinputDatas({
         title: "",
         category: "",
@@ -60,7 +61,6 @@ export default function admin() {
         spec: "",
         array: "",
       });
-      setproductImg("");
       console.log(inputDatas);
       toast.success("Added Successfully");
     } else {

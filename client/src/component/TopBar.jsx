@@ -106,8 +106,9 @@ export default function TopBar({ navColor }) {
           onMouseEnter={() => {
             sethoverIt("SignIn");
           }}
+         
         >
-          <div className="text-[25px]">
+          <div className="text-[25px]" >
             <PiUserBold />
           </div>
           <Text
