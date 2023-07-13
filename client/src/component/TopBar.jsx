@@ -14,10 +14,11 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { IoMdGift } from "react-icons/io";
 import { TbGiftCard } from "react-icons/tb";
 import { BiPackage } from "react-icons/bi";
+import LoginModal from "./LoginModal";
 
 export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
   const router = useRouter();
-
+  const [login, setlogin] = useState(false);
   const signIN_Options = [
     {
       id: 0,
@@ -89,7 +90,12 @@ export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
       </div>
       <div className="flex items-center justify-between h-[100%] w-[490px] relative">
         {"showBtn" === hoverIt ? (
-          <button className="bg-white text-[blue] p-1 w-[100px] font-semibold">
+          <button
+            onClick={() => {
+              setlogin(true);
+            }}
+            className="bg-white text-[blue] p-1 w-[100px] font-semibold"
+          >
             Login
           </button>
         ) : (
@@ -117,6 +123,9 @@ export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
                 <PiUserBold />
               </div>
               <Text
+                onclick={() => {
+                  sethoverIt("loginModal");
+                }}
                 name={"Sign in"}
                 customClass={"text-md font-semibold hover:text-white"}
               />
@@ -174,6 +183,12 @@ export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
           </>
         )}
       </div>
+      <LoginModal
+        open={login}
+        close={() => {
+          setlogin(false);
+        }}
+      />
     </div>
   );
 }
