@@ -1,23 +1,22 @@
 import { SLIDES } from "@/src/arrays/Array";
 import ImageSrc from "@/src/component/ImageSrc";
-import LoginModal from "@/src/component/LoginModal";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
 import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
 import Text from "@/src/component/Text";
 import Layout from "@/src/layout/Layout";
-import { getProductsByID } from "@/src/redux/productsSlices";
+import { filterNavItems } from "@/src/utils/Filter";
 import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [loading, setloading] = useState(false);
+  const [hoverIt, sethoverIt] = useState("");
   const router = useRouter();
-  const dispatch = useDispatch();
   const [index, setIndex] = useState(0);
   const item = SLIDES[index];
   const prevSlide = () => {
@@ -27,11 +26,7 @@ export default function Home() {
   const nextSlide = () => {
     setIndex((index + 1) % SLIDES.length);
   };
-  const { items: data } = useSelector((state) => state.products);
-  const filterNavItems = (type) => {
-    const filterdProducts = data?.filter((i) => i.array === type);
-    return filterdProducts;
-  };
+
   const settings = {
     infinite: true,
     slidesToShow: 7,
@@ -41,7 +36,16 @@ export default function Home() {
   };
   return (
     <>
-      <Layout navColor={"bg-white"}>
+      <Layout
+        hoverIt={hoverIt}
+        sethoverIt={sethoverIt}
+        navColor={"bg-white"}
+        loading={loading}
+        CartOnclick={() => {
+          setloading(true);
+          router.push("/authReq");
+        }}
+      >
         <div className=" w-[98%] flex  gap-4 items-center justify-center bg-white rounded-md p-2 cursor-pointer">
           {filterNavItems("none")?.map((i) => (
             <div
@@ -68,18 +72,24 @@ export default function Home() {
         </ProductContainer>
         <ProductContainer
           name={"Top Offers"}
-          
+          onClick={() => {
+            setloading(true);
+            router.push({
+              pathname: "/productPage",
+              query: { data: "Top Offers" },
+            });
+          }}
         >
           <div className="h-[100%] w-[100%] ">
             <Slider {...settings}>
               {filterNavItems("Top Offers").map((i) => (
                 <ProductCard
-                  onclick={() => {
-                    router.push({
-                      pathname: "/productPage",
-                      query: i,
-                    });
-                  }}
+                  // onclick={() => {
+                  //   router.push({
+                  //     pathname: "/productPage",
+                  //     query: i,
+                  //   });
+                  // }}
                   key={i._id}
                   img={i.image.url}
                   price={i.price}
@@ -89,7 +99,16 @@ export default function Home() {
             </Slider>
           </div>
         </ProductContainer>
-        <ProductContainer name={"Today's Fashion Deals"}>
+        <ProductContainer
+          name={"Today's Fashion Deals"}
+          onClick={() => {
+            setloading(true);
+            router.push({
+              pathname: "/productPage",
+              query: { data: "Today's Fashion Deals" },
+            });
+          }}
+        >
           <div className="h-[100%] w-[100%] ">
             <Slider {...settings}>
               {filterNavItems("Today's Fashion Deals").map((i) => (
@@ -103,7 +122,16 @@ export default function Home() {
             </Slider>
           </div>
         </ProductContainer>
-        <ProductContainer name={"Best of Electronics"}>
+        <ProductContainer
+          onClick={() => {
+            setloading(true);
+            router.push({
+              pathname: "/productPage",
+              query: { data: "Best of Electronics" },
+            });
+          }}
+          name={"Best of Electronics"}
+        >
           <div className="h-[100%] w-[100%] ">
             <Slider {...settings}>
               {filterNavItems("Best of Electronics").map((i) => (

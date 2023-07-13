@@ -11,8 +11,8 @@ export default function App({ Component, pageProps }) {
       products: productsReducer,
     },
   });
-
   store.dispatch(productsFetch());
+
   return (
     <Provider store={store}>
       <Component {...pageProps} />

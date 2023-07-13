@@ -1,11 +1,32 @@
 import React from "react";
 import TopBar from "../component/TopBar";
 import { Toaster } from "react-hot-toast";
+import Loaders from "../component/Loaders";
+import { classNames } from "../utils/Classname";
 
-export default function Layout({ children, navColor }) {
+export default function Layout({
+  children,
+  navColor,
+  loading,
+  CartOnclick,
+  hoverIt,
+  sethoverIt,
+  customClass,
+}) {
   return (
-    <div className=" w-[100%] flex flex-col items-center gap-4 bg-[#f1f2f4] relative">
-      <TopBar navColor={navColor} />
+    <div
+      className={classNames(
+        customClass ? customClass : "gap-4",
+        " w-[100%] flex flex-col items-center  relative"
+      )}
+    >
+      <Loaders loader={loading} />
+      <TopBar
+        navColor={navColor}
+        CartOnclick={CartOnclick}
+        hoverIt={hoverIt}
+        sethoverIt={sethoverIt}
+      />
       <div className=" w-[100%] flex flex-col items-center gap-2 ">
         <Toaster position="top-center" />
         {children}

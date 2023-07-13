@@ -3,13 +3,13 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { url } from "./api";
 
+
 const initialState = {
   items: [],
   status: null,
   createStatus: null,
   singleItem: [],
 };
-
 export const productsFetch = createAsyncThunk(
   "products/productsFetch",
   async () => {
@@ -25,8 +25,10 @@ export const productsCreate = createAsyncThunk(
   "products/productsCreate",
   async (values) => {
     try {
+     
       const response = await axios.post(`${url}/products`, values);
       return response.data;
+   
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data);
@@ -45,14 +47,14 @@ const productsSlices = createSlice({
   },
   extraReducers: {
     [productsFetch.pending]: (state, action) => {
-      state.status = "pending";
+      state.createStatus = "pending";
     },
     [productsFetch.fulfilled]: (state, { payload }) => {
       state.items = payload;
-      state.status = "success";
+      state.createStatus = "success";
     },
     [productsFetch.rejected]: (state, action) => {
-      state.status = "rejected";
+      state.createStatus = "rejected";
     },
     [productsCreate.pending]: (state, action) => {
       state.createStatus = "pending";
