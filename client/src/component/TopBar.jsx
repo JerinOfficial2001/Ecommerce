@@ -6,7 +6,7 @@ import { PiDotsThreeVertical } from "react-icons/pi";
 import { BsCart3 } from "react-icons/bs";
 import { PiUserBold } from "react-icons/pi";
 import { CiShop } from "react-icons/ci";
-import { BiChevronDown } from "react-icons/bi";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useRouter } from "next/router";
 import HoverCard from "./HoverCard";
 import { TiPlusOutline } from "react-icons/ti";
@@ -16,7 +16,14 @@ import { TbGiftCard } from "react-icons/tb";
 import { BiPackage } from "react-icons/bi";
 import LoginModal from "./LoginModal";
 
-export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
+export default function TopBar({
+  navColor,
+  CartOnclick,
+  hoverIt,
+  sethoverIt,
+  setloading,
+}) {
+  const [btnEffect, setbtnEffect] = useState("");
   const router = useRouter();
   const [login, setlogin] = useState(false);
   const signIN_Options = [
@@ -68,6 +75,7 @@ export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
         <div
           className="flex flex-col cursor-pointer"
           onClick={() => {
+            setloading(true);
             router.push("/admin");
           }}
         >
@@ -100,7 +108,13 @@ export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
           </button>
         ) : (
           <>
-            <div className="flex items-center gap-2 cursor-pointer">
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={() => {
+                setloading(true);
+                router.push("/authReq");
+              }}
+            >
               <div className="text-[25px]">
                 <CiShop />
               </div>
@@ -112,41 +126,45 @@ export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
 
             <div
               className={classNames(
-                hoverIt ? "bg-[#1c41d6] text-white" : null,
+                btnEffect ? "bg-[#1c41d6] text-white" : null,
                 "p-2 flex items-center gap-2 cursor-pointer  rounded-lg  "
               )}
               onMouseEnter={() => {
-                sethoverIt("SignIn");
+                setbtnEffect("SignIn");
+              }}
+              onClick={() => {
+                setlogin(true);
               }}
             >
               <div className="text-[25px]">
                 <PiUserBold />
               </div>
               <Text
-                onclick={() => {
-                  sethoverIt("loginModal");
-                }}
                 name={"Sign in"}
                 customClass={"text-md font-semibold hover:text-white"}
               />
 
               <div className="text-[20px]">
-                <BiChevronDown />
+                {"SignIn" === btnEffect ? <BiChevronUp /> : <BiChevronDown />}
               </div>
             </div>
 
-            {"SignIn" === hoverIt ? (
+            {"SignIn" === btnEffect ? (
               <HoverCard
                 close={() => {
-                  sethoverIt("");
+                  setbtnEffect("");
                 }}
                 customClass={
-                  "h-[310px] w-[280px] top-12 left-[38%] flex flex-col items-center "
+                  "h-[310px] w-[280px] top-12 left-[38%] flex flex-col items-center text-black"
                 }
               >
                 <div className="p-2 h-[50px] w-[100%] border-b-[1px]  border-b-[lavender] flex items-center justify-between">
                   <Text name={"New Customer?"} customClass={"font-semibold "} />
                   <Text
+                    onclick={() => {
+                      setloading(true);
+                      router.push("/loginPage");
+                    }}
                     name={"Sign Up"}
                     customClass={"font-semibold text-[#1c41d6] text-lg"}
                   />
@@ -167,15 +185,21 @@ export default function TopBar({ navColor, CartOnclick, hoverIt, sethoverIt }) {
                 </div>
               </HoverCard>
             ) : null}
-            <div className="flex items-center gap-2 cursor-pointer">
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={
+                CartOnclick
+                  ? CartOnclick
+                  : () => {
+                      setloading(true);
+                      router.push("/authReq");
+                    }
+              }
+            >
               <div className="text-[25px]">
                 <BsCart3 />
               </div>
-              <Text
-                name={"Cart"}
-                customClass={"text-md font-semibold "}
-                onclick={CartOnclick}
-              />
+              <Text name={"Cart"} customClass={"text-md font-semibold "} />
             </div>
             <div className="h-[100%] flex items-center text-[25px] ">
               <PiDotsThreeVertical />

@@ -1,3 +1,4 @@
+import ShortNavList from "@/src/component/ShortNavList";
 import Text from "@/src/component/Text";
 import Layout from "@/src/layout/Layout";
 import { filterNavItems } from "@/src/utils/Filter";
@@ -9,6 +10,7 @@ export default function ProductPage() {
 
   return (
     <Layout>
+      <ShortNavList />
       <div className="grid grid-cols-4 gap-5">
         {filterNavItems(query.data).map((i) => (
           <div className=" h-[350px] w-[300px] p-2 flex flex-col items-center justify-center gap-2 ">

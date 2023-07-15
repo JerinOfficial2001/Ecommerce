@@ -1,5 +1,7 @@
 import { SLIDES } from "@/src/arrays/Array";
 import ImageSrc from "@/src/component/ImageSrc";
+import Loaders from "@/src/component/Loaders";
+import NavList from "@/src/component/NavList";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
 import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
@@ -36,29 +38,9 @@ export default function Home() {
   };
   return (
     <>
-      <Layout
-        hoverIt={hoverIt}
-        sethoverIt={sethoverIt}
-        navColor={"bg-white"}
-        loading={loading}
-        CartOnclick={() => {
-          setloading(true);
-          router.push("/authReq");
-        }}
-      >
-        <div className=" w-[98%] flex  gap-4 items-center justify-center bg-white rounded-md p-2 cursor-pointer">
-          {filterNavItems("none")?.map((i) => (
-            <div
-              key={i._id}
-              className="h-[120px]  p-2 flex flex-col items-center justify-center gap-2 hover:text-[blue]"
-            >
-              <div>
-                <img className="h-[100%] w-[100%]" src={i.image.url} />
-              </div>
-              <Text name={i.title} customClass={"text-md font-semibold "} />
-            </div>
-          ))}
-        </div>
+      <Layout hoverIt={hoverIt} sethoverIt={sethoverIt} navColor={"bg-white"}>
+        <Loaders loader={loading} />
+       <NavList/>
         <ProductContainer
           divertor={true}
           disabledRight={index === SLIDES.length}
@@ -73,6 +55,7 @@ export default function Home() {
         <ProductContainer
           name={"Top Offers"}
           onClick={() => {
+            
             setloading(true);
             router.push({
               pathname: "/productPage",
@@ -84,16 +67,18 @@ export default function Home() {
             <Slider {...settings}>
               {filterNavItems("Top Offers").map((i) => (
                 <ProductCard
-                  // onclick={() => {
-                  //   router.push({
-                  //     pathname: "/productPage",
-                  //     query: i,
-                  //   });
-                  // }}
+                  onclick={() => {
+                    setloading(true);
+                    router.push({
+                      pathname: "/categoryPage",
+                    });
+                  }}
                   key={i._id}
                   img={i.image.url}
                   price={i.price}
-                  category={i.title}
+                  category={
+                    i.title.length > 29 ? i.title.slice(0, 29) + "..." : i.title
+                  }
                 />
               ))}
             </Slider>
@@ -113,10 +98,18 @@ export default function Home() {
             <Slider {...settings}>
               {filterNavItems("Today's Fashion Deals").map((i) => (
                 <ProductCard
+                  onclick={() => {
+                    setloading(true);
+                    router.push({
+                      pathname: "/categoryPage",
+                    });
+                  }}
                   key={i._id}
                   img={i.image.url}
                   price={i.price}
-                  category={i.title}
+                  category={
+                    i.title.length > 25 ? i.title.slice(0, 25) + "..." : i.title
+                  }
                 />
               ))}
             </Slider>
@@ -136,10 +129,18 @@ export default function Home() {
             <Slider {...settings}>
               {filterNavItems("Best of Electronics").map((i) => (
                 <ProductCard
+                  onclick={() => {
+                    setloading(true);
+                    router.push({
+                      pathname: "/categoryPage",
+                    });
+                  }}
                   key={i._id}
                   img={i.image.url}
                   price={i.price}
-                  category={i.title}
+                  category={
+                    i.title.length > 29 ? i.title.slice(0, 29) + "..." : i.title
+                  }
                 />
               ))}
             </Slider>

@@ -12,7 +12,10 @@ export default function LoginModal({ open, close }) {
       className="flex items-center justify-center"
     >
       <div className="w-[55%] h-[500px] bg-white flex items-center shadow">
-        <div className="bg-[rgb(40,115,240)] p-[5%] w-[40%] h-[500px] bg-white flex flex-col items-center justify-between">
+        <div
+          className=" p-[5%] w-[40%] h-[500px] bg-white flex flex-col items-center justify-between"
+          style={{ background: "#2874f0" }}
+        >
           <div className="w-[100%] flex flex-col gap-4 ">
             <Text
               name={"Login"}
@@ -61,7 +64,7 @@ export default function LoginModal({ open, close }) {
 
           <Text
             name={"New to Flipkart? Create an account"}
-            customClass={"text-md text-[rgb(40,115,240)]"}
+            customClass={"text-md text-[#2873f0] cursor-pointer"}
           />
         </div>
       </div>
