@@ -11,8 +11,8 @@ export default function Login({
   return (
     <>
       <div className="p-[5%] h-[100%] w-[60%] flex flex-col items-center justify-between">
-        <form class="w-full max-w-sm">
-          <div class="flex items-center border-b border-teal-500 py-2">
+        
+          <div className=" w-[100%] flex flex-col gap-4">
             <input
               className="w-full border-none "
               type="text"
@@ -56,7 +56,7 @@ export default function Login({
               Login
             </button>
           </div>
-        </form>
+       
         <Text
           onclick={() => {
             setloading("signup");

@@ -8,6 +8,7 @@ const JWT = process.env.JWT_SECRET;
 
 router.post("/register", async (req, res) => {
   const { userType, uname, email, password } = req.body;
+  const encryptedpassword = await bcrypt.hash(password, 10);
   try {
     const oldUser = await EcommerceAuth.findOne({
       email,
@@ -20,7 +21,7 @@ router.post("/register", async (req, res) => {
         userType,
         uname,
         email,
-        password,
+        password: encryptedpassword,
       });
       console.log(req.body);
       res.send(req.body);

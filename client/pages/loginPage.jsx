@@ -2,7 +2,7 @@ import ShortNavList from "@/src/component/ShortNavList";
 import SignUP from "@/src/component/SignUp";
 import Text from "@/src/component/Text";
 import Login from "@/src/component/login";
-import { createUser } from "@/src/controller/User";
+import { createUser, loginUser } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -24,6 +24,7 @@ export default function LoginPage() {
         email: "",
         password: "",
       });
+      loginUser(email, password);
     } else {
       toast.error("All fields are mandatory!");
     }
