@@ -7,7 +7,7 @@ const { EcommerceAuth } = require("../models/product");
 const JWT = process.env.JWT_SECRET;
 
 router.post("/register", async (req, res) => {
-  const { name, email, password, userType } = req.body;
+  const { userType, uname, email, password } = req.body;
   try {
     const oldUser = await EcommerceAuth.findOne({
       email,
@@ -15,12 +15,12 @@ router.post("/register", async (req, res) => {
     if (oldUser) {
       return res.json({ error: "user exists!" });
     }
-    if (name !== "" && email !== "" && password !== "") {
+    if (uname !== "" && email !== "" && password !== "") {
       await EcommerceAuth.create({
-        name,
+        userType,
+        uname,
         email,
         password,
-        userType,
       });
       console.log(req.body);
       res.send(req.body);

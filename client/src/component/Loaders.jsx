@@ -1,5 +1,5 @@
 import Modal from "@mui/material/Modal";
-import React from "react";
+import React, { useContext } from "react";
 import gif from "../assets/loader.gif";
 import Image from "next/image";
 import Text from "./Text";

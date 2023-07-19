@@ -5,22 +5,22 @@ import NavList from "@/src/component/NavList";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
 import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
-import Text from "@/src/component/Text";
+import { MyContext } from "@/src/context/MyContext";
 import Layout from "@/src/layout/Layout";
 import { filterNavItems } from "@/src/utils/Filter";
 import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Slider from "react-slick";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [loading, setloading] = useState(false);
   const [hoverIt, sethoverIt] = useState("");
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const item = SLIDES[index];
+
   const prevSlide = () => {
     setIndex((index - 1) % SLIDES.length);
   };
@@ -39,8 +39,7 @@ export default function Home() {
   return (
     <>
       <Layout hoverIt={hoverIt} sethoverIt={sethoverIt} navColor={"bg-white"}>
-        <Loaders loader={loading} />
-       <NavList/>
+        <NavList />
         <ProductContainer
           divertor={true}
           disabledRight={index === SLIDES.length}
@@ -55,8 +54,6 @@ export default function Home() {
         <ProductContainer
           name={"Top Offers"}
           onClick={() => {
-            
-            setloading(true);
             router.push({
               pathname: "/productPage",
               query: { data: "Top Offers" },
@@ -68,9 +65,9 @@ export default function Home() {
               {filterNavItems("Top Offers").map((i) => (
                 <ProductCard
                   onclick={() => {
-                    setloading(true);
                     router.push({
                       pathname: "/categoryPage",
+                      query: i,
                     });
                   }}
                   key={i._id}
@@ -87,7 +84,6 @@ export default function Home() {
         <ProductContainer
           name={"Today's Fashion Deals"}
           onClick={() => {
-            setloading(true);
             router.push({
               pathname: "/productPage",
               query: { data: "Today's Fashion Deals" },
@@ -99,9 +95,9 @@ export default function Home() {
               {filterNavItems("Today's Fashion Deals").map((i) => (
                 <ProductCard
                   onclick={() => {
-                    setloading(true);
                     router.push({
                       pathname: "/categoryPage",
+                      query: i,
                     });
                   }}
                   key={i._id}
@@ -117,7 +113,6 @@ export default function Home() {
         </ProductContainer>
         <ProductContainer
           onClick={() => {
-            setloading(true);
             router.push({
               pathname: "/productPage",
               query: { data: "Best of Electronics" },
@@ -130,9 +125,9 @@ export default function Home() {
               {filterNavItems("Best of Electronics").map((i) => (
                 <ProductCard
                   onclick={() => {
-                    setloading(true);
                     router.push({
                       pathname: "/categoryPage",
+                      query: i,
                     });
                   }}
                   key={i._id}

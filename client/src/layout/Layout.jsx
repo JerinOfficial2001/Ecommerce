@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import TopBar from "../component/TopBar";
 import { Toaster } from "react-hot-toast";
 import Loaders from "../component/Loaders";
 import { classNames } from "../utils/Classname";
-import { filterNavItems } from "../utils/Filter";
-import Text from "../component/Text";
 
 export default function Layout({
   children,
@@ -14,8 +12,7 @@ export default function Layout({
   sethoverIt,
   customClass,
 }) {
-  const [loading, setloading] = useState(false);
-
+  const [loading, setloading] = useState("");
   return (
     <div
       className={classNames(
@@ -23,15 +20,16 @@ export default function Layout({
         " w-[100%] flex flex-col items-center  relative"
       )}
     >
-      <Loaders loader={loading} />
+      {"true" === loading ? <Loaders loader={loading} /> : null}
       <TopBar
+        loading={loading}
+        setloading={setloading}
         navColor={navColor}
         CartOnclick={CartOnclick}
         hoverIt={hoverIt}
         sethoverIt={sethoverIt}
-        setloading={setloading}
       />
-      
+
       <div className=" w-[100%] flex flex-col items-center gap-2 ">
         <Toaster position="top-center" />
         {children}

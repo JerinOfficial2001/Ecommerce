@@ -1,15 +1,53 @@
 import ShortNavList from "@/src/component/ShortNavList";
+import SignUP from "@/src/component/SignUp";
 import Text from "@/src/component/Text";
+import Login from "@/src/component/login";
+import { createUser } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
-import { filterNavItems } from "@/src/utils/Filter";
-import TextField from "@mui/material/TextField";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
+  const [loading, setloading] = useState("");
+  const [inputDatas, setinputDatas] = useState({
+    userType: "",
+    uname: "",
+    email: "",
+    password: "",
+    secretKey: "",
+  });
+  const { userType, uname, email, password, secretKey } = inputDatas;
+  const handleSubmit = () => {
+    if (email !== "" && password !== "") {
+      setinputDatas({
+        email: "",
+        password: "",
+      });
+    } else {
+      toast.error("All fields are mandatory!");
+    }
+  };
+  const signUpHandler = () => {
+    if (userType === "admin" && secretKey != "MrJKart") {
+      toast.error("Invalid SecretKey");
+    }
+    if (userType !== "" && uname !== "" && email !== "" && password !== "") {
+      setinputDatas({
+        userType: "",
+        uname: "",
+        email: "",
+        password: "",
+      });
+      console.log(inputDatas);
+      createUser(userType, uname, email, password);
+    } else {
+      toast.error("All fields are mandatory!");
+    }
+  };
   return (
     <Layout customClass={"gap-0"}>
-    <ShortNavList/>
+      <ShortNavList />
       <div className="w-[100%] flex items-center justify-center">
         <div className="w-[55%] h-[500px] bg-white flex items-center shadow">
           <div
@@ -18,7 +56,7 @@ export default function LoginPage() {
           >
             <div className="w-[100%] flex flex-col gap-4 ">
               <Text
-                name={"Login"}
+                name={"signup" === loading ? "SignUp" : "Login"}
                 customClass={"text-[30px] font-bold text-white"}
               />
               <Text
@@ -37,41 +75,21 @@ export default function LoginPage() {
               alt=""
             />
           </div>
-          <div className="p-[5%] h-[100%] w-[60%] flex flex-col items-center justify-between">
-            <div className="w-[100%] flex flex-col gap-4">
-              <TextField
-                variant="standard"
-                label="Enter Email/Mobile number"
-                className="mb-4"
-              />
-              <Text
-                name={
-                  <p>
-                    By continuing, you agree to Flipkart's
-                    <span className="text-[rgb(40,115,240)]">
-                      {" "}
-                      Terms of Use{" "}
-                    </span>
-                    and
-                    <span className="text-[rgb(40,115,240)]">
-                      {" "}
-                      Privacy Policy{" "}
-                    </span>
-                    .
-                  </p>
-                }
-                customClass={" text-[gray] text-xs"}
-              />
-              <button className="p-3 w-[100%] text-white bg-[#f62]">
-                Login
-              </button>
-            </div>
-
-            <Text
-              name={"New to Flipkart? Create an account"}
-              customClass={"text-md text-[rgb(40,115,240)]"}
+          {"signup" === loading ? (
+            <SignUP
+              setinputDatas={setinputDatas}
+              inputDatas={inputDatas}
+              handleSubmit={signUpHandler}
+              setloading={setloading}
             />
-          </div>
+          ) : (
+            <Login
+              setinputDatas={setinputDatas}
+              inputDatas={inputDatas}
+              handleSubmit={handleSubmit}
+              setloading={setloading}
+            />
+          )}
         </div>
       </div>
     </Layout>

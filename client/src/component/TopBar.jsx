@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { classNames } from "../utils/Classname";
 import SearchBar from "../component/SearchBar";
 import Text from "../component/Text";
@@ -15,14 +15,18 @@ import { IoMdGift } from "react-icons/io";
 import { TbGiftCard } from "react-icons/tb";
 import { BiPackage } from "react-icons/bi";
 import LoginModal from "./LoginModal";
+import { MyContext } from "../context/MyContext";
+import Loaders from "./Loaders";
 
 export default function TopBar({
   navColor,
   CartOnclick,
   hoverIt,
   sethoverIt,
+  loading,
   setloading,
 }) {
+
   const [btnEffect, setbtnEffect] = useState("");
   const router = useRouter();
   const [login, setlogin] = useState(false);
@@ -75,8 +79,9 @@ export default function TopBar({
         <div
           className="flex flex-col cursor-pointer"
           onClick={() => {
-            setloading(true);
+            setloading("true");
             router.push("/admin");
+            setloading("");
           }}
         >
           <Text
@@ -111,8 +116,9 @@ export default function TopBar({
             <div
               className="flex items-center gap-2 cursor-pointer"
               onClick={() => {
-                setloading(true);
+                setloading("true");
                 router.push("/authReq");
+                setloading("");
               }}
             >
               <div className="text-[25px]">
@@ -162,8 +168,9 @@ export default function TopBar({
                   <Text name={"New Customer?"} customClass={"font-semibold "} />
                   <Text
                     onclick={() => {
-                      setloading(true);
+                      setloading("true");
                       router.push("/loginPage");
+                      setloading("");
                     }}
                     name={"Sign Up"}
                     customClass={"font-semibold text-[#1c41d6] text-lg"}
@@ -191,8 +198,9 @@ export default function TopBar({
                 CartOnclick
                   ? CartOnclick
                   : () => {
-                      setloading(true);
+                      setloading("true");
                       router.push("/authReq");
+                      setloading("");
                     }
               }
             >
