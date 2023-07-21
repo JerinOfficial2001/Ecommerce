@@ -19,6 +19,7 @@ export default function LoginPage() {
   });
   const { userType, uname, email, password, secretKey } = inputDatas;
   const handleSubmit = () => {
+    
     if (email !== "" && password !== "") {
       setinputDatas({
         email: "",

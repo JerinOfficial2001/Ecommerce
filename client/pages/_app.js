@@ -4,11 +4,10 @@ import "slick-carousel/slick/slick-theme.css";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import productsReducer, { productsFetch } from "../src/redux/productsSlices";
-import { MyContext } from "@/src/context/MyContext";
-import { useState } from "react";
+
 
 export default function App({ Component, pageProps }) {
-  const [loading, setloading] = useState("");
+  // const [loading, setloading] = useState("");
 
   const store = configureStore({
     reducer: {
@@ -19,9 +18,15 @@ export default function App({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <MyContext.Provider value={{ loading, setloading}}>
+      {/* <MyContext.Provider value={{ loading, setloading}}> */}
         <Component {...pageProps} />
-      </MyContext.Provider>
+      {/* </MyContext.Provider> */}
     </Provider>
   );
 }
+// andrew mead
+// squareshash
+// ai
+//sengreed -email
+//react query
+//typescripe

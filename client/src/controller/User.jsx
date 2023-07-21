@@ -45,7 +45,7 @@ export const loginUser = async (email, password) => {
           toast.success("login successful");
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("loggedIn", data.data);
-          window.location.href = "./userPage";
+          window.location.href = "./userDetails";
         }
       });
   } catch (error) {

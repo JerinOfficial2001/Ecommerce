@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { EcommerceAuth } = require("../models/product");
 
-const JWT = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post("/register", async (req, res) => {
   const { userType, uname, email, password } = req.body;
@@ -41,12 +41,13 @@ router.post("/login", async (req, res) => {
       res.json({ error: "User not Exists" });
     }
     if (await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ email: user.email }, JWT, { expiresIn: 10 });
-      if (res.status(201)) {
-        return res.json({ status: "ok", data: token });
-      } else {
-        return res.json({ status: error });
-      }
+      const token = jwt.sign({ email: user.email }, JWT_SECRET, {
+        expiresIn: "24h",
+      });
+
+      return res
+        .status(201)
+        .send({ status: "ok", useremail: user.email, data: token });
     }
     res.json({ status: "error", error: "Invalid Password" });
   } catch (error) {
@@ -63,12 +64,11 @@ router.post("/userData", async (req, res) => {
       }
       return res;
     });
-    console.log(user);
+    console.log("User", user);
     if (user == "token expired") {
       return res.send({ status: "error", data: "token expired" });
     }
-    const useremail = user.email;
-    EcommerceAuth.findOne({ email: useremail }).then((data) => {
+    await EcommerceAuth.findOne({ email: user.email }).then((data) => {
       res.send({ status: "ok", data: data });
     });
   } catch (error) {

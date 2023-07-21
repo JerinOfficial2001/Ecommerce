@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
-export default function admin() {
+export default function Admin() {
   const [productImg, setproductImg] = useState("");
   const [inputDatas, setinputDatas] = useState({
     title: "",

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import TopBar from "../component/TopBar";
 import { Toaster } from "react-hot-toast";
 import Loaders from "../component/Loaders";
@@ -11,6 +11,7 @@ export default function Layout({
   hoverIt,
   sethoverIt,
   customClass,
+  uname,
 }) {
   const [loading, setloading] = useState("");
   return (
@@ -28,6 +29,7 @@ export default function Layout({
         CartOnclick={CartOnclick}
         hoverIt={hoverIt}
         sethoverIt={sethoverIt}
+        uname={uname}
       />
 
       <div className=" w-[100%] flex flex-col items-center gap-2 ">

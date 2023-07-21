@@ -25,8 +25,8 @@ export default function TopBar({
   sethoverIt,
   loading,
   setloading,
+  uname,
 }) {
-
   const [btnEffect, setbtnEffect] = useState("");
   const router = useRouter();
   const [login, setlogin] = useState(false);
@@ -146,7 +146,7 @@ export default function TopBar({
                 <PiUserBold />
               </div>
               <Text
-                name={"Sign in"}
+                name={uname?uname:"Sign in"}
                 customClass={"text-md font-semibold hover:text-white"}
               />
 
@@ -172,7 +172,7 @@ export default function TopBar({
                       router.push("/loginPage");
                       setloading("");
                     }}
-                    name={"Sign Up"}
+                    name={uname ? uname : "Sign Up"}
                     customClass={"font-semibold text-[#1c41d6] text-lg"}
                   />
                 </div>
