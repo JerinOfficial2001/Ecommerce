@@ -1,7 +1,7 @@
+import Login from "@/src/component/Login";
 import ShortNavList from "@/src/component/ShortNavList";
 import SignUP from "@/src/component/SignUp";
 import Text from "@/src/component/Text";
-import Login from "@/src/component/login";
 import { createUser, loginUser } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import Image from "next/image";
@@ -19,7 +19,6 @@ export default function LoginPage() {
   });
   const { userType, uname, email, password, secretKey } = inputDatas;
   const handleSubmit = () => {
-    
     if (email !== "" && password !== "") {
       setinputDatas({
         email: "",
