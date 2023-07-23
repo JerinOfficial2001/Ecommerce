@@ -3,12 +3,13 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { url } from "./api";
 
-
 const initialState = {
   items: [],
   status: null,
   createStatus: null,
   singleItem: [],
+  images: [],
+  singleImg: {},
 };
 export const productsFetch = createAsyncThunk(
   "products/productsFetch",
@@ -25,10 +26,8 @@ export const productsCreate = createAsyncThunk(
   "products/productsCreate",
   async (values) => {
     try {
-     
       const response = await axios.post(`${url}/products`, values);
       return response.data;
-   
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data);
@@ -43,6 +42,15 @@ const productsSlices = createSlice({
       const id = payload;
       const index = state.items?.find((i) => i.array === id);
       state.singleItem = index;
+    },
+    getImg: (state, { payload }) => {
+      console.log("GetDatas", payload);
+      state.images = payload;
+    },
+    getimgByID: (state, { payload }) => {
+      const id = payload;
+      const index = state.images?.find((i) => i._id === id);
+      state.singleImg = index;
     },
   },
   extraReducers: {
@@ -69,4 +77,4 @@ const productsSlices = createSlice({
   },
 });
 export default productsSlices.reducer;
-export const { getProductsByID } = productsSlices.actions;
+export const { getProductsByID, getimgByID, getImg } = productsSlices.actions;

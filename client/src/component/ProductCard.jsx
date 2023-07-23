@@ -8,7 +8,7 @@ export default function ProductCard({ img, price, category, onclick }) {
       onClick={onclick}
     >
       <div className=" w-[90%] h-[80%] flex items-center justify-center scale-[0.8] hover:scale-[0.9] p-2">
-        <img src={img} alt="loading" />
+        <img loading="lazy" src={img} alt="loading" />
       </div>
       <div className="flex flex-col items-center justify-center w-[100%]">
         <Text name={category} customClass={"text-sm"} />

@@ -23,8 +23,6 @@ export default function TopBar({
   CartOnclick,
   hoverIt,
   sethoverIt,
-  loading,
-  setloading,
   uname,
 }) {
   const [btnEffect, setbtnEffect] = useState("");
@@ -79,9 +77,7 @@ export default function TopBar({
         <div
           className="flex flex-col cursor-pointer"
           onClick={() => {
-            setloading("true");
-            router.push("/admin");
-            setloading("");
+            router.push("/");
           }}
         >
           <Text
@@ -116,9 +112,7 @@ export default function TopBar({
             <div
               className="flex items-center gap-2 cursor-pointer"
               onClick={() => {
-                setloading("true");
                 router.push("/authReq");
-                setloading("");
               }}
             >
               <div className="text-[25px]">
@@ -146,7 +140,7 @@ export default function TopBar({
                 <PiUserBold />
               </div>
               <Text
-                name={uname?uname:"Sign in"}
+                name={uname ? uname : "Sign in"}
                 customClass={"text-md font-semibold hover:text-white"}
               />
 
@@ -168,9 +162,12 @@ export default function TopBar({
                   <Text name={"New Customer?"} customClass={"font-semibold "} />
                   <Text
                     onclick={() => {
-                      setloading("true");
-                      router.push("/loginPage");
-                      setloading("");
+                      router.push({
+                        pathname: "/loginPage",
+                        query: {
+                          data: "signUp",
+                        },
+                      });
                     }}
                     name={uname ? uname : "Sign Up"}
                     customClass={"font-semibold text-[#1c41d6] text-lg"}
@@ -198,9 +195,7 @@ export default function TopBar({
                 CartOnclick
                   ? CartOnclick
                   : () => {
-                      setloading("true");
                       router.push("/authReq");
-                      setloading("");
                     }
               }
             >
@@ -209,8 +204,25 @@ export default function TopBar({
               </div>
               <Text name={"Cart"} customClass={"text-md font-semibold "} />
             </div>
-            <div className="h-[100%] flex items-center text-[25px] ">
-              <PiDotsThreeVertical />
+            <div className="h-[100%] flex items-center text-[25px] relative">
+              <PiDotsThreeVertical
+                onClick={() => {
+                  setbtnEffect("vertBtn");
+                }}
+              />
+              {"vertBtn" === btnEffect ? (
+                <div className="rounded-md top-[60px] right-0 absolute bg-[white] shadow">
+                  <button
+                    className="px-7 text-black font-semibold p-2 hover:bg-[#19a4db2a] hover-border-2 border-[black]"
+                    onClick={() => {
+                      window.localStorage.clear();
+                      window.location.href = "./";
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : null}
             </div>
           </>
         )}

@@ -5,10 +5,12 @@ import Text from "@/src/component/Text";
 import { createUser, loginUser } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
+  const { query } = useRouter();
   const [loading, setloading] = useState("");
   const [inputDatas, setinputDatas] = useState({
     userType: "",
@@ -76,7 +78,7 @@ export default function LoginPage() {
               alt=""
             />
           </div>
-          {"signup" === loading ? (
+          { "signup" === loading ? (
             <SignUP
               setinputDatas={setinputDatas}
               inputDatas={inputDatas}

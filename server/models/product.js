@@ -30,3 +30,5 @@ const AuthSchema = new mongoose.Schema(
 );
 const EcommerceAuth = mongoose.model("EcommerceAuth", AuthSchema);
 exports.EcommerceAuth = EcommerceAuth;
+
+

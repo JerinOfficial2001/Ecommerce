@@ -4,6 +4,7 @@ const router = express.Router();
 const cloudinary = require("../utils/cloudinary");
 const { Product } = require("../models/product");
 
+
 // router.post("/add", async (req, res) => {
 //   const productData = req.body;
 //   try {
@@ -52,5 +53,8 @@ router.get("/", async (req, res) => {
     res.send(500).send(error);
   }
 });
+
+
+module.exports = router;
 
 module.exports = router;
