@@ -132,7 +132,7 @@ export default function Home() {
                   }}
                   key={i._id}
                   img={i.image.url}
-                  price={i.price}
+                  price={"₹ " + i.price}
                   category={
                     i.title.length > 29 ? i.title.slice(0, 29) + "..." : i.title
                   }

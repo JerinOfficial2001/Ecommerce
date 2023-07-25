@@ -40,7 +40,10 @@ export default function ProductPage() {
             </div>
             <div className="flex flex-col items-center justify-center gap-1">
               <Text customClass={"font-semibold "} name={i.title} />
-              <Text customClass={"text-[green] text-sm"} name={i.price} />
+              <Text
+                customClass={"text-[green] text-sm"}
+                name={"₹ " + i.price}
+              />
               <Text customClass={"text-[gray] text-sm"} name={i.description} />
             </div>
           </div>
