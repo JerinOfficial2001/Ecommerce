@@ -1,11 +1,26 @@
 import React from "react";
 import Text from "../Text";
+import SearchBar from "../SearchBar";
+import { classNames } from "@/src/utils/Classname";
 
-export default function CardContainer({ children, name }) {
+export default function CardContainer({ children, name, Searchbar, MainDivStyle }) {
   return (
-    <div className=" h-[100%] w-[50%] flex-col flex items-center gap-2 p-6 rounded-md bg-[#0000001a] ">
+    <div className=" h-[100%] w-[50%] flex-col flex items-center gap-8 p-6 rounded-md bg-[#0000001a] ">
       <Text name={name} customClass={"text-lg font-bold"} />
-      <div className="container-snap overflow-y-scroll h-[100%] w-[100%] ">
+      {"true" === Searchbar && (
+        <div className="w-[100%] h-[55px] relative">
+          <SearchBar
+            customClass={"left-2"}
+            customWidth={"w-[100%] top-[50px]"}
+          />
+        </div>
+      )}
+      <div
+        className={classNames(
+          MainDivStyle,
+          "container-snap overflow-y-scroll h-[100%] w-[100%] "
+        )}
+      >
         {children}
       </div>
     </div>

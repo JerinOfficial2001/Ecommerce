@@ -3,8 +3,9 @@ import React from "react";
 import Text from "../Text";
 import RightArrow from "../Icons/RightArrow";
 import DeleteIcon from "../Icons/DeleteIcon";
+import EditIcon from "../Icons/EditIcon";
 
-export default function Card({ image, title, text }) {
+export default function Card({ image, title, text, deleteHandler,editHandler }) {
   return (
     <div className=" mb-2 w-[100%] h-[92px] bg-[#ada7a765] rounded-lg shadow-md hover:shadow-inner hover:shadow-[#62f7fcc2] p-2 flex items-center gap-2">
       <div className="bg-[#62fc9098] p-1 w-[100px] h-[100%] rounded-md ">
@@ -28,10 +29,10 @@ export default function Card({ image, title, text }) {
       </div>
       <div className="flex items-center justify-between p-2  h-[100%] w-[100px]">
         <div className="flex items-center justify-center">
-          <DeleteIcon  />
+          <EditIcon onClick={editHandler} />
         </div>
         <div className="flex items-center justify-center">
-          <DeleteIcon />
+          <DeleteIcon onClick={deleteHandler} />
         </div>
         <div className="flex items-center justify-center">
           <RightArrow />

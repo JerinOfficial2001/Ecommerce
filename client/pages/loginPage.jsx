@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
-  const { query } = useRouter();
+  // const { query } = useRouter();
   const [loading, setloading] = useState("");
   const [inputDatas, setinputDatas] = useState({
     userType: "",

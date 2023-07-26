@@ -2,14 +2,15 @@ import React, { useContext, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { MyContext } from "../context/MyContext";
+import { classNames } from "../utils/Classname";
 
-export default function SearchBar() {
+export default function SearchBar({ customClass, customWidth }) {
   const [loading, setloading] = useState("");
 
   const items = useSelector((state) => state.products.items);
   const [searchInput, setsearchInput] = useState("");
   return (
-    <div className=" bg-[#f0f5ff] gap-3 w-[100%] h-[100%] rounded-lg flex  items-center">
+    <div className="bg-[#f0f5ff] gap-3 w-[100%] h-[100%] rounded-lg flex  items-center">
       <input
         type="text"
         placeholder="Search for Products, Brands and More"
@@ -32,13 +33,20 @@ export default function SearchBar() {
           setsearchInput(e.target.value);
         }}
       />
-      <div className="left-[13%] text-[25px] text-[#7f8187] absolute">
+      <div
+        className={classNames(
+          customClass,
+          "text-[25px] text-[#7f8187] absolute"
+        )}
+      >
         <IoSearchOutline />
       </div>
       {"open" === loading ? (
         <div
-         
-          className="p-2 bg-white shadow rounded-md max-h-[300px] w-[48%] overflow-y-scroll top-[90%] absolute flex-col flex items-center  gap-2"
+          className={classNames(
+            customWidth,
+            "container-snap p-2 bg-white shadow rounded-md max-h-[300px]  overflow-y-scroll top-[90%] absolute flex-col flex items-center  gap-2"
+          )}
         >
           {items
             .filter((val) => {

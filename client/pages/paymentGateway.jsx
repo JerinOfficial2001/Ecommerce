@@ -1,4 +1,3 @@
-import Layout from "@/src/layout/Layout";
 import axios from "axios";
 import React, { useState } from "react";
 import useRazorpay from "react-razorpay";
@@ -49,20 +48,29 @@ export default function PaymentGateway() {
     }
   };
   return (
-    <Layout>
-      <div className="App">
-        <div className="book_container">
-          <img src={book.img} alt="book_img" className="book_img" />
-          <p className="book_name">{book.name}</p>
-          <p className="book_author">By {book.author}</p>
-          <p className="book_price">
-            Price : <span>&#x20B9; {book.price}</span>
-          </p>
-          <button onClick={handlePayment} className="buy_btn">
-            buy now
-          </button>
-        </div>
+    <div className="h-[100vh] w-[100%] flex items-center justify-center">
+      <div className="w-[250px] rounded-md bg-[gray] shadow-md">
+        <img
+          src={book.img}
+          alt="book_img"
+          className="w-[100%] h-[300px] rounded-md "
+        />
+        <p className="text-[20px] font-bold m-[5px] align-center">
+          {book.name}
+        </p>
+        <p className="text-[16px] font-[500] m-[5px] align-center">
+          By {book.author}
+        </p>
+        <p className="text-[#21a700]">
+          Price : <span>&#x20B9; {book.price}</span>
+        </p>
+        <button
+          onClick={handlePayment}
+          className="w-[100%] h-[50px] text-[12px] font-bold cursor-pointer bg-[#f4d072] mt-[10px]"
+        >
+          buy now
+        </button>
       </div>
-    </Layout>
+    </div>
   );
 }

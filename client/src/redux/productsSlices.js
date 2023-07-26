@@ -10,7 +10,9 @@ const initialState = {
   singleItem: [],
   images: [],
   singleImg: {},
+  singleProduct: {},
 };
+
 export const productsFetch = createAsyncThunk(
   "products/productsFetch",
   async () => {
@@ -42,6 +44,11 @@ const productsSlices = createSlice({
       const id = payload;
       const index = state.items?.find((i) => i.array === id);
       state.singleItem = index;
+    },
+    getItemsByID: (state, { payload }) => {
+      const id = payload;
+      const index = state.items?.find((i) => i._id === id);
+      state.singleProduct = index;
     },
     getImg: (state, { payload }) => {
       console.log("GetDatas", payload);
@@ -77,4 +84,5 @@ const productsSlices = createSlice({
   },
 });
 export default productsSlices.reducer;
-export const { getProductsByID, getimgByID, getImg } = productsSlices.actions;
+export const { getProductsByID, getimgByID, getImg, getItemsByID } =
+  productsSlices.actions;

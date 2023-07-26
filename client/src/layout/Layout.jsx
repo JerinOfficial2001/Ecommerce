@@ -12,6 +12,7 @@ export default function Layout({
   sethoverIt,
   customClass,
   uname,
+  singleProducts,
 }) {
   const [loading, setloading] = useState("");
   return (

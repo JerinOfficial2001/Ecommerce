@@ -1,23 +1,33 @@
 import { ARRAY_OPTIONS, OPTIONS } from "@/src/arrays/Array";
 import LeftGo from "@/src/component/Icons/LeftGo";
+import { updateProducts } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
-import { productsCreate } from "@/src/redux/productsSlices";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function AddProducts() {
+export default function EditProducts() {
   const [productImg, setproductImg] = useState("");
+  // const singleProducts = useSelector((state) => state.products.singleProduct);
+  // function storage() {
+  //   const store = window.localStorage.getItem("singleProducts");
+  //   const data = JSON.parse(store);
+  //   console.log(data);
+  // }
+
+  // const single = JSON.parse(localStorage.getItem("singleProducts"));
+  var singleProducts = JSON.parse(
+    window.localStorage.getItem("singleProducts")
+  );
   const [inputDatas, setinputDatas] = useState({
-    title: "",
-    category: "",
-    price: "",
-    description: "",
-    spec: "",
-    array: "",
+    title: singleProducts.title ? singleProducts.title : "",
+    category: singleProducts.category ? singleProducts.category : "",
+    price: singleProducts.price ? singleProducts.price : "",
+    description: singleProducts.description ? singleProducts.description : "",
+    spec: singleProducts.spec ? singleProducts.spec : "",
+    array: singleProducts.array ? singleProducts.array : "",
   });
-  const dispatch = useDispatch();
   const router = useRouter();
 
   const { title, category, price, description, spec, array } = inputDatas;
@@ -36,6 +46,7 @@ export default function AddProducts() {
       setproductImg("");
     }
   };
+
   const submitHandler = async () => {
     if (
       title !== "" &&
@@ -45,17 +56,18 @@ export default function AddProducts() {
       spec !== "" &&
       array !== ""
     ) {
-      dispatch(
-        productsCreate({
-          title,
-          category,
-          price,
-          description,
-          spec,
-          array,
-          image: productImg,
-        })
+      const id = singleProducts._id;
+      updateProducts(
+        id,
+        title,
+        category,
+        price,
+        description,
+        spec,
+        array,
+        productImg
       );
+
       setproductImg("");
       setinputDatas({
         title: "",
@@ -65,9 +77,7 @@ export default function AddProducts() {
         spec: "",
         array: "",
       });
-      console.log(inputDatas);
-      toast.success("Added Successfully");
-      router.push("/admin");
+      router.push("/userDetails");
     } else {
       toast.error("All fields are mandatory");
     }
@@ -159,7 +169,7 @@ export default function AddProducts() {
             onClick={submitHandler}
             className="hover:transition hover:text-white hover:bg-[blue] border-black rounded-md border-2 px-5 p-2"
           >
-            Submit
+            Update
           </button>
         </div>
         <div className="bg-[lavender] rounded-ld h-[100%] w-[48%] flex gap-2 justify-center items-center">

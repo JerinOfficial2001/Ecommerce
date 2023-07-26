@@ -94,7 +94,7 @@ export default function TopBar({
           />
         </div>
         <div className="h-[40px] w-[730px]">
-          <SearchBar />
+          <SearchBar customClass={"left-[13%] "} customWidth={"w-[47%]"} />
         </div>
       </div>
       <div className="flex items-center justify-between h-[100%] w-[490px] relative">

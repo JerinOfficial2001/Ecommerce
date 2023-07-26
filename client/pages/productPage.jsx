@@ -34,7 +34,7 @@ export default function ProductPage() {
                   loading="lazy"
                   src={i.image.url}
                   alt="loading"
-                  className="h-[100%] "
+                  className="h-[100%]"
                 />
               </div>
             </div>
