@@ -18,7 +18,7 @@ export default function EditProducts() {
 
   // const single = JSON.parse(localStorage.getItem("singleProducts"));
   var singleProducts = JSON.parse(
-    window?.localStorage?.getItem("singleProducts")
+    window?.localStorage.getItem("singleProducts")
   );
   const [inputDatas, setinputDatas] = useState({
     title: singleProducts.title ? singleProducts.title : "",
