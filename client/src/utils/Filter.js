@@ -1,6 +1,14 @@
-const { useSelector } = require("react-redux");
+import { useEffect } from "react";
+import { productsFetch } from "../controller/User";
+
+const { useSelector, useDispatch } = require("react-redux");
 
 export function filterNavItems(type) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(productsFetch());
+  }, []);
+
   const items = useSelector((state) => state.products.items);
 
   const filterdProducts = items?.filter((i) => i.array === type);

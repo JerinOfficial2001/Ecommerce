@@ -1,33 +1,40 @@
 import Card from "@/src/component/Admin/Card";
 import CardContainer from "@/src/component/Admin/CardContainer";
-import { deleteProducts } from "@/src/controller/User";
+import { deleteProducts, productsFetch } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { getItemsByID } from "@/src/redux/productsSlices";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Admin({ userData }) {
+  const [singleProducts, setsingleProducts] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(productsFetch());
+  }, []);
   const products = useSelector((state) => state.products.items);
-  console.log("PRODUCTS", products);
-  const singleProducts = useSelector((state) => state.products.singleProduct);
+
+  const single = useSelector((state) => state.products.singleProduct);
+  useEffect(() => {
+    if (Object.keys(single).length == 0) {
+      setsingleProducts({
+        array: "empty",
+        category: "empty",
+        description: "empty",
+        price: "empty",
+        spec: "empty",
+        title: "empty",
+      });
+    } else {
+      setsingleProducts(single);
+    }
+  }, [single]);
   console.log("singleProducts", singleProducts);
-  const stroage = () => {
-    window.localStorage.setItem(
-      "singleProducts",
-      JSON.stringify(singleProducts)
-    );
-  };
-  if (singleProducts == {}) {
-    window.localStorage.setItem(
-      "singleProducts",
-      JSON.stringify(singleProducts)
-    );
-  } else {
-    stroage();
-  }
+  typeof window !== "undefined"
+    ? localStorage.setItem("singleProducts", JSON.stringify(singleProducts))
+    : null;
 
   return (
     <Layout uname={userData?.uname} customClass={"gap-0"}>
