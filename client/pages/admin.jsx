@@ -1,6 +1,12 @@
 import Card from "@/src/component/Admin/Card";
 import CardContainer from "@/src/component/Admin/CardContainer";
-import { deleteProducts, productsFetch } from "@/src/controller/User";
+import Products from "@/src/component/Admin/Products";
+import UserContainer from "@/src/component/Admin/UsersContainer";
+import {
+  deleteProducts,
+  productsFetch,
+  usersFetch,
+} from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { getItemsByID } from "@/src/redux/productsSlices";
 import { useRouter } from "next/router";
@@ -9,13 +15,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Admin({ userData }) {
   const [singleProducts, setsingleProducts] = useState({});
+  const [clicky, setclicky] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(productsFetch());
+    dispatch(usersFetch());
   }, []);
   const products = useSelector((state) => state.products.items);
-
+  const users = useSelector((state) => state.products.users);
+  console.log("USERS", users);
   const single = useSelector((state) => state.products.singleProduct);
   useEffect(() => {
     if (Object.keys(single).length == 0) {
@@ -37,7 +46,11 @@ export default function Admin({ userData }) {
     : null;
 
   return (
-    <Layout uname={userData?.uname} customClass={"gap-0"}>
+    <Layout
+      uname={userData?.uname}
+      customClass={"gap-0"}
+      searchItems={products}
+    >
       <div className="h-[92vh] w-[100%] flex items-center p-2 gap-2">
         {/* <div className="h-[100%] w-[50%] p-4 ">hello</div> */}
         <CardContainer
@@ -46,7 +59,7 @@ export default function Admin({ userData }) {
           <button
             className="hover:animate-pulse font-semibold rounded-md shadow-lg hover:bg-gradient-to-r from-[#519e9188] to-fuchsia-500 bg-[#8080802c] w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
             onClick={() => {
-              router.push("/addProducts");
+              setclicky("products");
             }}
           >
             PRODUCTS
@@ -54,7 +67,7 @@ export default function Admin({ userData }) {
           <button
             className="hover:animate-pulse font-semibold rounded-md shadow-lg hover:bg-gradient-to-r from-[#04700a] to-indigo-500 bg-[#8080802c] w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
             onClick={() => {
-              router.push("/addProducts");
+              setclicky("users");
             }}
           >
             USERS
@@ -77,25 +90,8 @@ export default function Admin({ userData }) {
             ORDERS
           </button>
         </CardContainer>
-        <CardContainer Searchbar={"true"} name={"PRODUCTS"}>
-          {products.map((i) => (
-            <Card
-              editHandler={() => {
-                const id = i._id;
-                dispatch(getItemsByID(id));
-                router.push("/editProduct");
-              }}
-              deleteHandler={() => {
-                deleteProducts(i._id);
-                router.push("/userDetails");
-              }}
-              title={i.title}
-              text={i.category}
-              key={i._id}
-              image={i.image?.url}
-            />
-          ))}
-        </CardContainer>
+        {clicky === "products" ? <Products products={products} /> : null}
+        {clicky === "users" ? <UserContainer users={users} /> : null}
       </div>
     </Layout>
   );

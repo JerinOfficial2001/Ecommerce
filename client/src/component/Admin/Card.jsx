@@ -29,7 +29,7 @@ export default function Card({ image, title, text, deleteHandler,editHandler }) 
       </div>
       <div className="flex items-center justify-between p-2  h-[100%] w-[100px]">
         <div className="flex items-center justify-center">
-          <EditIcon onClick={editHandler} />
+          {"editBtn" && <EditIcon onClick={editHandler} />}
         </div>
         <div className="flex items-center justify-center">
           <DeleteIcon onClick={deleteHandler} />

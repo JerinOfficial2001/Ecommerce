@@ -3,11 +3,11 @@ import { IoSearchOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { MyContext } from "../context/MyContext";
 import { classNames } from "../utils/Classname";
+import SearchFilter from "../utils/SearchFilter";
 
-export default function SearchBar({ customClass, customWidth }) {
+export default function SearchBar({ customClass, customWidth, searchItems }) {
   const [loading, setloading] = useState("");
 
-  const items = useSelector((state) => state.products.items);
   const [searchInput, setsearchInput] = useState("");
   return (
     <div className="bg-[#f0f5ff] gap-3 w-[100%] h-[100%] rounded-lg flex  items-center">
@@ -30,6 +30,7 @@ export default function SearchBar({ customClass, customWidth }) {
         }}
         value={searchInput}
         onChange={(e) => {
+          setloading("open");
           setsearchInput(e.target.value);
         }}
       />
@@ -42,34 +43,13 @@ export default function SearchBar({ customClass, customWidth }) {
         <IoSearchOutline />
       </div>
       {"open" === loading ? (
-        <div
-          className={classNames(
-            customWidth,
-            "container-snap p-2 bg-white shadow rounded-md max-h-[300px]  overflow-y-scroll top-[90%] absolute flex-col flex items-center  gap-2"
-          )}
-        >
-          {items
-            .filter((val) => {
-              if (searchInput == "") {
-                return val;
-              } else if (
-                val.title.toLowerCase().includes(searchInput.toLowerCase())
-              ) {
-                return val;
-              }
-            })
-            .map((i) => (
-              <p
-                onClick={() => {
-                  setsearchInput(i.title);
-                  setloading("");
-                }}
-                className="text-black cursor-pointer w-[100%] hover:bg-[#0000005b] rounded-md p-1"
-              >
-                {i.title}
-              </p>
-            ))}
-        </div>
+        <SearchFilter
+          searchItems={searchItems}
+          setsearchInput={setsearchInput}
+          searchInput={searchInput}
+          customWidth={customWidth}
+          setloading={setloading}
+        />
       ) : null}
     </div>
   );

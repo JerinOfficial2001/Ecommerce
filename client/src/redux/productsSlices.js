@@ -1,5 +1,5 @@
-import {  createSlice } from "@reduxjs/toolkit";
-import { productsCreate, productsFetch } from "../controller/User";
+import { createSlice } from "@reduxjs/toolkit";
+import { productsCreate, productsFetch, usersFetch } from "../controller/User";
 
 const initialState = {
   items: [],
@@ -9,6 +9,7 @@ const initialState = {
   images: [],
   singleImg: {},
   singleProduct: {},
+  users: [],
 };
 
 const productsSlices = createSlice({
@@ -54,6 +55,16 @@ const productsSlices = createSlice({
       state.createStatus = "success";
     },
     [productsCreate.rejected]: (state, action) => {
+      state.createStatus = "rejected";
+    },
+    [usersFetch.pending]: (state, action) => {
+      state.createStatus = "pending";
+    },
+    [usersFetch.fulfilled]: (state, { payload }) => {
+      state.users = payload;
+      state.createStatus = "success";
+    },
+    [usersFetch.rejected]: (state, action) => {
       state.createStatus = "rejected";
     },
   },

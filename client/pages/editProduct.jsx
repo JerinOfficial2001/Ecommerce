@@ -11,9 +11,9 @@ export default function EditProducts() {
   const [productImg, setproductImg] = useState("");
   // const singleProducts = useSelector((state) => state.products.singleProduct);
 
-  var singleProducts = JSON.parse(localStorage?.getItem("singleProducts"));
-  console.log("singleProducts", singleProducts);
-
+  var singleProducts = JSON.parse(
+window.localStorage?.getItem("singleProducts")
+  );
   const [inputDatas, setinputDatas] = useState({
     title: singleProducts.title ? singleProducts.title : "",
     category: singleProducts.category ? singleProducts.category : "",

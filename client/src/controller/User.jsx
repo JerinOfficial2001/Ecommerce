@@ -48,11 +48,26 @@ export const loginUser = async (email, password) => {
           window.localStorage.setItem("loggedIn", data.data);
           window.location.href = "./userDetails";
         }
+        if (data.error == "User not Exists") {
+          toast.error("User not Exists");
+        }
+         if (data.status == "error") {
+           toast.error("Invalid Password");
+         }
       });
   } catch (error) {
     console.log(error);
   }
 };
+
+export const usersFetch = createAsyncThunk("users/usersFetch", async () => {
+  try {
+    const response = await axios.get(`${auth}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export const productsFetch = createAsyncThunk(
   "products/productsFetch",

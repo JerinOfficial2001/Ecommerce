@@ -1,7 +1,7 @@
 import { ARRAY_OPTIONS, OPTIONS } from "@/src/arrays/Array";
 import LeftGo from "@/src/component/Icons/LeftGo";
+import { productsCreate } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
-import { productsCreate } from "@/src/redux/productsSlices";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";

@@ -12,7 +12,7 @@ export default function Layout({
   sethoverIt,
   customClass,
   uname,
-  singleProducts,
+  searchItems,
 }) {
   const [loading, setloading] = useState("");
   return (
@@ -31,6 +31,7 @@ export default function Layout({
         hoverIt={hoverIt}
         sethoverIt={sethoverIt}
         uname={uname}
+        searchItems={searchItems}
       />
 
       <div className=" w-[100%] flex flex-col items-center gap-2 ">

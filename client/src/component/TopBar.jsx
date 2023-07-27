@@ -15,14 +15,12 @@ import { IoMdGift } from "react-icons/io";
 import { TbGiftCard } from "react-icons/tb";
 import { BiPackage } from "react-icons/bi";
 import LoginModal from "./LoginModal";
-import { MyContext } from "../context/MyContext";
-import Loaders from "./Loaders";
 
 export default function TopBar({
   navColor,
   CartOnclick,
   hoverIt,
-  sethoverIt,
+  searchItems,
   uname,
 }) {
   const [btnEffect, setbtnEffect] = useState("");
@@ -94,7 +92,11 @@ export default function TopBar({
           />
         </div>
         <div className="h-[40px] w-[730px]">
-          <SearchBar customClass={"left-[13%] "} customWidth={"w-[47%]"} />
+          <SearchBar
+            customClass={"left-[13%] "}
+            customWidth={"w-[47%]"}
+            searchItems={searchItems}
+          />
         </div>
       </div>
       <div className="flex items-center justify-between h-[100%] w-[490px] relative">
