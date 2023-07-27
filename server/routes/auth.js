@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
       email,
     });
     if (!user) {
-      res.json({ error: "User not Exists" });
+     return res.json({ error: "User not Exists" });
     }
     if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign({ email: user.email }, JWT_SECRET, {
