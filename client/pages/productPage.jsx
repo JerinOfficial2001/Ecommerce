@@ -11,9 +11,10 @@ export default function ProductPage() {
   const { loading, setloading } = useContext(MyContext);
   const router = useRouter();
   const { query } = useRouter();
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   return (
-    <Layout customClass={"gap-0"}>
+    <Layout customClass={"gap-0"} uname={userData?.uname}>
       <ShortNavList />
       {"true" === loading ? <Loaders loader={loading} /> : null}
       <div className="grid grid-cols-4 gap-5">

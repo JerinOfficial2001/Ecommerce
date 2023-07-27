@@ -11,15 +11,17 @@ import { filterNavItems } from "@/src/utils/Filter";
 import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ userData }) {
   const [hoverIt, sethoverIt] = useState("");
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const item = SLIDES[index];
+  const items = useSelector((state) => state.products.items);
 
   const prevSlide = () => {
     setIndex((index - 1) % SLIDES.length);
@@ -38,7 +40,13 @@ export default function Home() {
   };
   return (
     <>
-      <Layout hoverIt={hoverIt} sethoverIt={sethoverIt} navColor={"bg-white"}>
+      <Layout
+        uname={userData?.uname}
+        hoverIt={hoverIt}
+        sethoverIt={sethoverIt}
+        navColor={"bg-white"}
+        searchItems={items}
+      >
         <NavList />
         <ProductContainer
           divertor={true}

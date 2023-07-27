@@ -4,14 +4,14 @@ import { auth } from "@/src/redux/api";
 import UserPage from "./userPage";
 import Admin from "./admin";
 import { toast } from "react-hot-toast";
+import Home from ".";
 
 export default function UserDetails() {
   const router = useRouter();
   const [userData, setuserData] = useState("");
   const [admin, setadmin] = useState(false);
   const userInfo = async () => {
-
-    await fetch(auth+"/userData", {
+    await fetch(auth + "/userData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,16 +37,12 @@ export default function UserDetails() {
         }
       });
   };
-
   useEffect(() => {
     userInfo();
   }, []);
+  typeof window !== "undefined"
+    ? localStorage.setItem("userData", JSON.stringify(userData))
+    : null;
 
-  return admin ? (
-    <Admin userData={userData} />
-  ) : (
-    <UserPage userData={userData} />
-  );
+  return admin ? <Admin userData={userData} /> : <Home userData={userData} />;
 }
-
-

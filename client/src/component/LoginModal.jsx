@@ -5,6 +5,7 @@ import Image from "next/image";
 import Login from "./Login";
 import SignUP from "./SignUp";
 import { createUser, loginUser } from "../controller/User";
+import { toast } from "react-hot-toast";
 
 export default function LoginModal({ open, close }) {
     const [loading, setloading] = useState("");

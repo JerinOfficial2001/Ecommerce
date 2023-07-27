@@ -91,7 +91,9 @@ export default function Admin({ userData }) {
           </button>
         </CardContainer>
         {clicky === "products" ? <Products products={products} /> : null}
-        {clicky === "users" ? <UserContainer users={users} /> : null}
+        {clicky === "users" ? (
+          <UserContainer setclicky={setclicky} users={users} />
+        ) : null}
       </div>
     </Layout>
   );

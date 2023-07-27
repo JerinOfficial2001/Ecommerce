@@ -135,7 +135,7 @@ export default function TopBar({
                 setbtnEffect("SignIn");
               }}
               onClick={() => {
-                setlogin(true);
+                uname ? null : setlogin(true);
               }}
             >
               <div className="text-[25px]">
@@ -164,7 +164,7 @@ export default function TopBar({
                   <Text name={"New Customer?"} customClass={"font-semibold "} />
                   <Text
                     onclick={() => {
-                      router.push({
+                     uname?null: router.push({
                         pathname: "/loginPage",
                         query: {
                           data: "signUp",

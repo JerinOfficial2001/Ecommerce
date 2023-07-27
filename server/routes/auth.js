@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
         password: encryptedpassword,
       });
       console.log(req.body);
-      res.send(req.body);
+      res.send({ status: "ok", data: req.body });
     }
   } catch (error) {
     console.log(error);
@@ -38,7 +38,7 @@ router.post("/login", async (req, res) => {
       email,
     });
     if (!user) {
-     return res.json({ error: "User not Exists" });
+      return res.json({ error: "User not Exists" });
     }
     if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign({ email: user.email }, JWT_SECRET, {
@@ -94,7 +94,7 @@ router.delete("/:id", async (req, res) => {
     const prevValue = temp.find((i) => i._id === id);
     const newValue = req.body;
     const db = await EcommerceAuth.deleteOne(prevValue, newValue);
-    res.json(req.body);
+    res.json({ status: "deleted" });
   } catch (error) {
     console.log(error);
     res.send(500).send(error);
@@ -109,7 +109,7 @@ router.put("/:id", async (req, res) => {
     const prevValue = temp.find((i) => i._id === id);
     const newValue = req.body;
     const db = await EcommerceAuth.updateOne(prevValue, newValue);
-    res.json(req.body);
+    res.json({ status: "updated", data: req.body });
   } catch (error) {
     console.log(error);
     res.send(500).send(error);

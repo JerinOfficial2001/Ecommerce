@@ -19,7 +19,15 @@ export const createUser = async (userType, uname, email, password) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        if (data.status === "ok") {
+          toast.success("Account Created Successfully");
+        }
+        if (data.error === "user exists!") {
+          toast.error("user exists!");
+        }
+      });
   } catch (error) {
     console.log(error);
   }
@@ -51,10 +59,20 @@ export const loginUser = async (email, password) => {
         if (data.error == "User not Exists") {
           toast.error("User not Exists");
         }
-         if (data.status == "error") {
-           toast.error("Invalid Password");
-         }
+        if (data.status == "error") {
+          toast.error("Invalid Password");
+        }
       });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const deleteUser = async (id) => {
+  try {
+    const response = await axios.delete(`http://localhost:4000/api/auth/${id}`);
+    if (response.data.status === "deleted") {
+      toast.success("User Deleted Successfully");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -63,7 +81,7 @@ export const loginUser = async (email, password) => {
 export const usersFetch = createAsyncThunk("users/usersFetch", async () => {
   try {
     const response = await axios.get(`${auth}`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.log(error);
   }
