@@ -14,12 +14,12 @@ export default function Admin({ userData }) {
   console.log("PRODUCTS", products);
   const singleProducts = useSelector((state) => state.products.singleProduct);
   console.log("singleProducts", singleProducts);
-  singleProducts
-    ? window.localStorage.setItem(
-        "singleProducts",
-        JSON.stringify(singleProducts)
-      )
-    : null;
+  if (singleProducts) {
+    window.localStorage.setItem(
+      "singleProducts",
+      JSON.stringify(singleProducts)
+    );
+  }
   return (
     <Layout uname={userData?.uname} customClass={"gap-0"}>
       <div className="h-[92vh] w-[100%] flex items-center p-2 gap-2">
