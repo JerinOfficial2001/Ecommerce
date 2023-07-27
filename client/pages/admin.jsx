@@ -20,7 +20,7 @@ export default function Admin({ userData }) {
       JSON.stringify(singleProducts)
     );
   };
-  if (singleProducts !== {}) {
+  if (singleProducts == {}) {
     window.localStorage.setItem(
       "singleProducts",
       JSON.stringify(singleProducts)
