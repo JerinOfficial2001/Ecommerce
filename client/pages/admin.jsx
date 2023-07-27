@@ -14,7 +14,7 @@ export default function Admin({ userData }) {
   console.log("PRODUCTS", products);
   const singleProducts = useSelector((state) => state.products.singleProduct);
   console.log("singleProducts", singleProducts);
-  if (singleProducts) {
+  if (singleProducts !== {}) {
     window.localStorage.setItem(
       "singleProducts",
       JSON.stringify(singleProducts)
