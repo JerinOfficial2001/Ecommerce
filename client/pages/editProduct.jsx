@@ -31,6 +31,13 @@ export default function EditProducts() {
   const { title, category, price, description, spec, array } = inputDatas;
   const handleProductImageUpload = (e) => {
     const file = e.target.files[0];
+    const imgSize = file.size;
+    if (imgSize > 50000) {
+      toast.error("Image Size should be below 50kb");
+      setglower("fileRed");
+    } else {
+      setglower("");
+    }
     TransformFile(file);
   };
   const TransformFile = (file) => {

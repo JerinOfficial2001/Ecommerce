@@ -91,7 +91,7 @@ export const productsFetch = createAsyncThunk(
   "products/productsFetch",
   async () => {
     try {
-      const response = await axios.get(`${url}/products`);
+      const response = await axios.get(`${url}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -102,9 +102,14 @@ export const productsCreate = createAsyncThunk(
   "products/productsCreate",
   async (values) => {
     try {
-      const response = await axios.post(`${url}/products`, values);
+      const response = await axios.post(
+        "http://localhost:4000/api/products",
+        values
+      );
       if (response.data.status === "added") {
         toast.success("Added Successfully");
+
+        console.log("Added", response.data.data);
       }
       return response.data.data;
     } catch (error) {
@@ -127,7 +132,6 @@ export const deleteProducts = async (id) => {
       .then((data) => {
         if (data.status == "deleted") {
           toast.success("Deleted successful");
-          console.log(data);
         }
       });
   } catch (error) {

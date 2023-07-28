@@ -38,7 +38,7 @@ export default function Admin({ userData }) {
       setsingleProducts(single);
     }
   }, [single]);
-  console.log("singleProducts", singleProducts);
+  // console.log("singleProducts", singleProducts);
   typeof window !== "undefined" &&
     window.localStorage.setItem(
       "singleProducts",

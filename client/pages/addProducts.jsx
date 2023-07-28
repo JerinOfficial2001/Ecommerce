@@ -1,7 +1,8 @@
 import { ARRAY_OPTIONS, OPTIONS } from "@/src/arrays/Array";
 import LeftGo from "@/src/component/Icons/LeftGo";
-import { productsCreate } from "@/src/controller/User";
+import { productsCreate, productsFetch } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
+import { classNames } from "@/src/utils/Classname";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -9,6 +10,7 @@ import { useDispatch } from "react-redux";
 
 export default function AddProducts() {
   const [productImg, setproductImg] = useState("");
+  const [glower, setglower] = useState("");
   const [inputDatas, setinputDatas] = useState({
     title: "",
     category: "",
@@ -23,6 +25,14 @@ export default function AddProducts() {
   const { title, category, price, description, spec, array } = inputDatas;
   const handleProductImageUpload = (e) => {
     const file = e.target.files[0];
+    const imgSize = file.size;
+    if (imgSize > 50000) {
+      toast.error("Image Size should be below 50kb");
+      setglower("fileRed");
+    } else {
+      setglower("");
+    }
+    
     TransformFile(file);
   };
   const TransformFile = (file) => {
@@ -43,9 +53,10 @@ export default function AddProducts() {
       price !== "" &&
       description !== "" &&
       spec !== "" &&
-      array !== ""
+      array !== "" &&
+      productImg !== ""
     ) {
-      dispatch(
+      const sendData = await dispatch(
         productsCreate({
           title,
           category,
@@ -56,18 +67,19 @@ export default function AddProducts() {
           image: productImg,
         })
       );
-      setproductImg("");
-      setinputDatas({
-        title: "",
-        category: "",
-        price: "",
-        description: "",
-        spec: "",
-        array: "",
-      });
-     
-    
-      router.push("/admin");
+      sendData ? router.push("/admin") : null;
+      await dispatch(productsFetch());
+      sendData ? setproductImg("") : null;
+      sendData
+        ? setinputDatas({
+            title: "",
+            category: "",
+            price: "",
+            description: "",
+            spec: "",
+            array: "",
+          })
+        : null;
     } else {
       toast.error("All fields are mandatory");
     }
@@ -139,7 +151,10 @@ export default function AddProducts() {
           <input
             accept="image/"
             onChange={handleProductImageUpload}
-            className="p-2 rounded-md w-[90%] bg-white"
+            className={classNames(
+              glower === "fileRed" ? "border-2 border-[red]" : null,
+              " p-2 rounded-md w-[90%] bg-white "
+            )}
             type="file"
             required
           />

@@ -38,6 +38,9 @@ exports.createProducts = async (req, res) => {
 };
 exports.deleteProducts = async (req, res) => {
   try {
+    const product = await Product.findById(req.params.id);
+    const imgID = product.image.public_id;
+    await cloudinary.uploader.destroy(imgID);
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json({ status: "deleted" });
   } catch (error) {
