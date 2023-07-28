@@ -102,10 +102,7 @@ export const productsCreate = createAsyncThunk(
   "products/productsCreate",
   async (values) => {
     try {
-      const response = await axios.post(
-        url,
-        values
-      );
+      const response = await axios.post(url, values);
       if (response.data.status === "added") {
         toast.success("Added Successfully");
 
@@ -130,7 +127,7 @@ export const deleteProducts = async (id) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status == "deleted") {
+        if (data.status === "deleted") {
           toast.success("Deleted successful");
         }
       });
@@ -168,7 +165,7 @@ export const updateProducts = async (
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status == "updated") {
+        if (data.status === "updated") {
           toast.success("Updated successful");
           console.log(data);
         }

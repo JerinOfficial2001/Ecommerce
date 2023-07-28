@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function EditProducts() {
   const [productImg, setproductImg] = useState("");
   // const singleProducts = useSelector((state) => state.products.singleProduct);
+  const [glower, setglower] = useState("");
 
   const windows =
     typeof window !== "undefined" &&
