@@ -11,7 +11,9 @@ export default function ProductPage() {
   const { loading, setloading } = useContext(MyContext);
   const router = useRouter();
   const { query } = useRouter();
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const windows =
+    typeof window !== "undefined" && window.localStorage.getItem("userData");
+  const userData = JSON.parse(windows);
 
   return (
     <Layout customClass={"gap-0"} uname={userData?.uname}>

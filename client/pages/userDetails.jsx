@@ -40,9 +40,8 @@ export default function UserDetails() {
   useEffect(() => {
     userInfo();
   }, []);
-  typeof window !== "undefined"
-    ? localStorage.setItem("userData", JSON.stringify(userData))
-    : null;
+  typeof window !== "undefined" &&
+    window.localStorage.setItem("userData", JSON.stringify(userData));
 
   return admin ? <Admin userData={userData} /> : <Home userData={userData} />;
 }

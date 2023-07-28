@@ -5,7 +5,9 @@ import React from "react";
 
 export default function categoryPage() {
   const router = useRouter();
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const windows =
+    typeof window !== "undefined" && window.localStorage.getItem("userData");
+  const userData = JSON.parse(windows);
   console.log("UserData", userData);
   return (
     <Layout customClass={"gap-0"} uname={userData?.uname}>

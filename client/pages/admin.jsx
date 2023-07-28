@@ -41,9 +41,11 @@ export default function Admin({ userData }) {
     }
   }, [single]);
   console.log("singleProducts", singleProducts);
-  typeof window !== "undefined"
-    ? localStorage.setItem("singleProducts", JSON.stringify(singleProducts))
-    : null;
+  typeof window !== "undefined" &&
+    window.localStorage.setItem(
+      "singleProducts",
+      JSON.stringify(singleProducts)
+    );
 
   return (
     <Layout
