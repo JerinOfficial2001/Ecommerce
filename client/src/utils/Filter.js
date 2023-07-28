@@ -10,7 +10,8 @@ export function filterNavItems(type) {
   }, []);
 
   const items = useSelector((state) => state.products.items);
-
+  typeof window !== "undefined" &&
+    window.localStorage.setItem("items", JSON.stringify(items));
   const filterdProducts = items?.filter((i) => i.array === type);
   return filterdProducts;
 }

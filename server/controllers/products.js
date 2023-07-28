@@ -10,6 +10,26 @@ exports.getAllProducts = async (req, res) => {
     res.send(500).send(error);
   }
 };
+exports.getProductsByArray = async (req, res) => {
+  try {
+    const products = await Product.find(req.body);
+
+    res.status(200).send(products);
+  } catch (error) {
+    console.log(error);
+    res.send(500).send(error);
+  }
+};
+exports.getProductsById = async (req, res) => {
+  try {
+    const products = await Product.findById(req.params.id);
+
+    res.status(200).send(products);
+  } catch (error) {
+    console.log(error);
+    res.send(500).send(error);
+  }
+};
 exports.createProducts = async (req, res) => {
   const { array, title, price, category, description, image, spec } = req.body;
   try {

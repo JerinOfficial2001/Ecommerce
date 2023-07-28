@@ -3,7 +3,6 @@ import { classNames } from "../utils/Classname";
 import SearchBar from "../component/SearchBar";
 import Text from "../component/Text";
 import { PiDotsThreeVertical } from "react-icons/pi";
-import { BsCart3 } from "react-icons/bs";
 import { PiUserBold } from "react-icons/pi";
 import { CiShop } from "react-icons/ci";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -12,9 +11,10 @@ import HoverCard from "./HoverCard";
 import { TiPlusOutline } from "react-icons/ti";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { IoMdGift } from "react-icons/io";
-import { TbGiftCard } from "react-icons/tb";
 import { BiPackage } from "react-icons/bi";
 import LoginModal from "./LoginModal";
+import { TbGiftCard } from "react-icons/tb";
+import CartIcon from "./Icons/CartIcon";
 
 export default function TopBar({
   navColor,
@@ -164,12 +164,14 @@ export default function TopBar({
                   <Text name={"New Customer?"} customClass={"font-semibold "} />
                   <Text
                     onclick={() => {
-                     uname?null: router.push({
-                        pathname: "/loginPage",
-                        query: {
-                          data: "signUp",
-                        },
-                      });
+                      uname
+                        ? null
+                        : router.push({
+                            pathname: "/loginPage",
+                            query: {
+                              data: "signUp",
+                            },
+                          });
                     }}
                     name={uname ? uname : "Sign Up"}
                     customClass={"font-semibold text-[#1c41d6] text-lg"}
@@ -202,7 +204,7 @@ export default function TopBar({
               }
             >
               <div className="text-[25px]">
-                <BsCart3 />
+                <CartIcon />
               </div>
               <Text name={"Cart"} customClass={"text-md font-semibold "} />
             </div>

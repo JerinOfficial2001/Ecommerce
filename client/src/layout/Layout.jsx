@@ -13,6 +13,7 @@ export default function Layout({
   customClass,
   uname,
   searchItems,
+  customChild,
 }) {
   const [loading, setloading] = useState("");
   return (
@@ -34,7 +35,12 @@ export default function Layout({
         searchItems={searchItems}
       />
 
-      <div className=" w-[100%] flex flex-col items-center gap-2 ">
+      <div
+        className={classNames(
+          customChild?customChild:"gap-2",
+          " w-[100%] flex flex-col items-center  "
+        )}
+      >
         <Toaster position="top-center" />
         {children}
       </div>

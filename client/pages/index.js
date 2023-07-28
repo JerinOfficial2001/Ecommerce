@@ -1,17 +1,16 @@
 import { SLIDES } from "@/src/arrays/Array";
 import ImageSrc from "@/src/component/ImageSrc";
-import Loaders from "@/src/component/Loaders";
 import NavList from "@/src/component/NavList";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
 import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
-import { MyContext } from "@/src/context/MyContext";
 import Layout from "@/src/layout/Layout";
+import { getItemsByID } from "@/src/redux/productsSlices";
 import { filterNavItems } from "@/src/utils/Filter";
 import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +20,17 @@ export default function Home({ userData }) {
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const item = SLIDES[index];
-  const items = useSelector((state) => state.products.items);
+  const dispatch = useDispatch();
+
+  const windows =
+    typeof window !== "undefined" && window.localStorage.getItem("items");
+  const items = JSON.parse(windows);
+
+  // const items = useSelector((state) => state.products.items);
+  const singleProduct = useSelector((state) => state.products.singleProduct);
+  // console.log("singleProduct", singleProduct);
+  typeof window !== "undefined" &&
+    window.localStorage.setItem("singleProduct", JSON.stringify(singleProduct));
 
   const prevSlide = () => {
     setIndex((index - 1) % SLIDES.length);
@@ -63,7 +72,7 @@ export default function Home({ userData }) {
           name={"Top Offers"}
           onClick={() => {
             router.push({
-              pathname: "/productPage",
+              pathname: "/collectionPage",
               query: { data: "Top Offers" },
             });
           }}
@@ -73,8 +82,9 @@ export default function Home({ userData }) {
               {filterNavItems("Top Offers").map((i) => (
                 <ProductCard
                   onclick={() => {
+                    dispatch(getItemsByID(i._id));
                     router.push({
-                      pathname: "/categoryPage",
+                      pathname: "/productPage",
                       query: i,
                     });
                   }}
@@ -93,7 +103,7 @@ export default function Home({ userData }) {
           name={"Today's Fashion Deals"}
           onClick={() => {
             router.push({
-              pathname: "/productPage",
+              pathname: "/collectionPage",
               query: { data: "Today's Fashion Deals" },
             });
           }}
@@ -103,8 +113,9 @@ export default function Home({ userData }) {
               {filterNavItems("Today's Fashion Deals").map((i) => (
                 <ProductCard
                   onclick={() => {
+                    dispatch(getItemsByID(i._id));
                     router.push({
-                      pathname: "/categoryPage",
+                      pathname: "/productPage",
                       query: i,
                     });
                   }}
@@ -122,7 +133,7 @@ export default function Home({ userData }) {
         <ProductContainer
           onClick={() => {
             router.push({
-              pathname: "/productPage",
+              pathname: "/collectionPage",
               query: { data: "Best of Electronics" },
             });
           }}
@@ -133,8 +144,9 @@ export default function Home({ userData }) {
               {filterNavItems("Best of Electronics").map((i) => (
                 <ProductCard
                   onclick={() => {
+                    dispatch(getItemsByID(i._id));
                     router.push({
-                      pathname: "/categoryPage",
+                      pathname: "/productPage",
                       query: i,
                     });
                   }}

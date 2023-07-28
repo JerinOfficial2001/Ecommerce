@@ -3,7 +3,7 @@ import Layout from "@/src/layout/Layout";
 import { useRouter } from "next/router";
 import React from "react";
 
-export default function categoryPage() {
+export default function CategoryPage() {
   const router = useRouter();
   const windows =
     typeof window !== "undefined" && window.localStorage.getItem("userData");
