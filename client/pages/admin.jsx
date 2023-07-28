@@ -1,18 +1,19 @@
+import AddProductsContainer from "@/src/component/Admin/AddProductsContainer";
 import Card from "@/src/component/Admin/Card";
 import CardContainer from "@/src/component/Admin/CardContainer";
+import EditProductsContainer from "@/src/component/Admin/EditProductsContainer";
 import Products from "@/src/component/Admin/Products";
 import UserContainer from "@/src/component/Admin/UsersContainer";
 import { productsFetch, usersFetch } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { getItemsByID } from "@/src/redux/productsSlices";
+import { classNames } from "@/src/utils/Classname";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Admin({ userData }) {
-  const [singleProducts, setsingleProducts] = useState({});
-
-  const [clicky, setclicky] = useState("");
+  const [clicky, setclicky] = useState("/");
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -22,28 +23,8 @@ export default function Admin({ userData }) {
   }, []);
   const products = useSelector((state) => state.products.items);
   const users = useSelector((state) => state.products.users);
-  console.log("USERS", users);
-  const single = useSelector((state) => state.products.singleProduct);
-  useEffect(() => {
-    if (Object.keys(single).length == 0) {
-      setsingleProducts({
-        array: "empty",
-        category: "empty",
-        description: "empty",
-        price: "empty",
-        spec: "empty",
-        title: "empty",
-      });
-    } else {
-      setsingleProducts(single);
-    }
-  }, [single]);
-  // console.log("singleProducts", singleProducts);
-  typeof window !== "undefined" &&
-    window.localStorage.setItem(
-      "singleProducts",
-      JSON.stringify(singleProducts)
-    );
+  // console.log("USERS", users);
+  const singleProduct = useSelector((state) => state.products.singleProduct);
 
   return (
     <Layout
@@ -57,15 +38,25 @@ export default function Admin({ userData }) {
           MainDivStyle={"flex-col flex items-center justify-center gap-2"}
         >
           <button
-            className="hover:animate-pulse font-semibold rounded-md shadow-lg hover:bg-gradient-to-r from-[#519e9188] to-fuchsia-500 bg-[#8080802c] w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            className={classNames(
+              clicky === "/"
+                ? "bg-gradient-to-r from-[#519e9188] to-fuchsia-500 animate-pulse"
+                : "bg-[#8080802c]",
+              "hover:bg-gradient-to-r from-[#519e9188] to-fuchsia-500 font-semibold rounded-md shadow-lg  w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            )}
             onClick={() => {
-              setclicky("products");
+              setclicky("/");
             }}
           >
             PRODUCTS
           </button>
           <button
-            className="hover:animate-pulse font-semibold rounded-md shadow-lg hover:bg-gradient-to-r from-[#04700a] to-indigo-500 bg-[#8080802c] w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            className={classNames(
+              clicky === "users"
+                ? "bg-gradient-to-r from-[#04700a] to-indigo-500 bg-[#8080802c] animate-pulse"
+                : "bg-[#8080802c]",
+              "hover:bg-gradient-to-r from-[#04700a] to-indigo-500 bg-[#8080802c] font-semibold rounded-md shadow-lg  w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            )}
             onClick={() => {
               setclicky("users");
             }}
@@ -74,24 +65,43 @@ export default function Admin({ userData }) {
           </button>
 
           <button
-            className="hover:animate-pulse font-semibold rounded-md shadow-lg hover:bg-gradient-to-r from-[pink] to-pink-500 bg-[#8080802c] w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            className={classNames(
+              clicky === "addProducts"
+                ? "bg-gradient-to-r from-[pink] to-pink-500 bg-[#8080802c] animate-pulse"
+                : "bg-[#8080802c]",
+              "hover:bg-gradient-to-r from-[pink] to-pink-500 bg-[#8080802c] font-semibold rounded-md shadow-lg  w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            )}
             onClick={() => {
-              router.push("/addProducts");
+              setclicky("addProducts");
             }}
           >
             ADD PRODUCTS
           </button>
           <button
-            className="hover:animate-pulse font-semibold rounded-md shadow-lg hover:bg-gradient-to-r from-[red] to-blue-500 bg-[#8080802c] w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            className={classNames(
+              clicky === "orders"
+                ? "bg-gradient-to-r from-[red] to-blue-500 bg-[#8080802c] animate-pulse"
+                : "bg-[#8080802c]",
+              "hover:bg-gradient-to-r from-[red] to-blue-500 bg-[#8080802c] font-semibold rounded-md shadow-lg  w-[100%] h-[90px] transition delay-150 duration-300 ease-in-out ..."
+            )}
             onClick={() => {
-              router.push("/addProducts");
+              setclicky("/");
             }}
           >
             ORDERS
           </button>
         </CardContainer>
-        {clicky === "products" ? <Products products={products} /> : null}
+        {clicky === "/" ? (
+          <Products setclicky={setclicky} products={products} />
+        ) : null}
         {clicky === "users" ? <UserContainer users={users} /> : null}
+        {clicky === "addProducts" ? <AddProductsContainer /> : null}
+        {clicky === "editProducts" ? (
+          <EditProductsContainer
+            singleProduct={singleProduct}
+            setclicky={setclicky}
+          />
+        ) : null}
       </div>
     </Layout>
   );

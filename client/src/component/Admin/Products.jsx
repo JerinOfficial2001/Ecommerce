@@ -6,7 +6,7 @@ import { getItemsByID } from "@/src/redux/productsSlices";
 import Card from "./Card";
 import { deleteProducts, productsFetch } from "@/src/controller/User";
 
-export default function Products({ products }) {
+export default function Products({ products, setclicky }) {
   const router = useRouter();
   const dispatch = useDispatch();
   return (
@@ -16,7 +16,7 @@ export default function Products({ products }) {
           editHandler={() => {
             const id = i._id;
             dispatch(getItemsByID(id));
-            router.push("/editProduct");
+            setclicky("editProducts");
           }}
           deleteHandler={async () => {
             await deleteProducts(i._id);
