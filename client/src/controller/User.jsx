@@ -115,6 +115,14 @@ export const productsCreate = createAsyncThunk(
     }
   }
 );
+export const getProductsByArray = async (data) => {
+  try {
+    const res = await axios.post(url + "/array");
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const deleteProducts = async (id) => {
   try {
     await fetch(url + `/${id}`, {

@@ -71,6 +71,7 @@ export default function Home({ userData }) {
         <ProductContainer
           name={"Top Offers"}
           onClick={() => {
+            
             router.push({
               pathname: "/collectionPage",
               query: { data: "Top Offers" },

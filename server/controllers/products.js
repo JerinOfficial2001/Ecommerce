@@ -10,6 +10,7 @@ exports.getAllProducts = async (req, res) => {
     res.send(500).send(error);
   }
 };
+
 exports.getProductsByArray = async (req, res) => {
   try {
     const products = await Product.find(req.body);
