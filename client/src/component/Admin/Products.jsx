@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { getItemsByID } from "@/src/redux/productsSlices";
 import Card from "./Card";
-import { deleteProducts } from "@/src/controller/User";
+import { deleteProducts, productsFetch } from "@/src/controller/User";
 
 export default function Products({ products }) {
   const router = useRouter();
@@ -18,9 +18,9 @@ export default function Products({ products }) {
             dispatch(getItemsByID(id));
             router.push("/editProduct");
           }}
-          deleteHandler={() => {
-            deleteProducts(i._id);
-            router.push("/userDetails");
+          deleteHandler={async () => {
+            await deleteProducts(i._id);
+            await dispatch(productsFetch());
           }}
           title={i.title}
           text={i.category}

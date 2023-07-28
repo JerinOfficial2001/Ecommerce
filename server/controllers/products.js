@@ -28,7 +28,7 @@ exports.createProducts = async (req, res) => {
           array,
         });
         const savedProduct = await product.save();
-        res.status(200).send(savedProduct);
+        res.status(200).send({ status: "added", data: savedProduct });
       }
     }
   } catch (error) {

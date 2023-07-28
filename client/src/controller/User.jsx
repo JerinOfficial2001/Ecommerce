@@ -69,7 +69,7 @@ export const loginUser = async (email, password) => {
 };
 export const deleteUser = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:4000/api/auth/${id}`);
+    const response = await axios.delete(auth + `/${id}`);
     if (response.data.status === "deleted") {
       toast.success("User Deleted Successfully");
     }
@@ -103,10 +103,13 @@ export const productsCreate = createAsyncThunk(
   async (values) => {
     try {
       const response = await axios.post(`${url}/products`, values);
-      return response.data;
+      if (response.data.status === "added") {
+        toast.success("Added Successfully");
+      }
+      return response.data.data;
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data);
+      toast.error("Image Size should be below 50kb");
     }
   }
 );

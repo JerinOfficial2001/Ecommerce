@@ -15,7 +15,9 @@ export default function EditProducts() {
     typeof window !== "undefined" &&
     window.localStorage.getItem("singleProducts");
   const singleProducts = JSON.parse(windows);
-
+  const userDataStorage =
+    typeof window !== "undefined" && window.localStorage.getItem("userData");
+  const userData = JSON.parse(userDataStorage);
   const [inputDatas, setinputDatas] = useState({
     title: singleProducts.title ? singleProducts.title : "",
     category: singleProducts.category ? singleProducts.category : "",
@@ -79,7 +81,7 @@ export default function EditProducts() {
     }
   };
   return (
-    <Layout>
+    <Layout uname={userData?.uname}>
       <div className="flex gap-2 items-center w-[100%] h-[670px] justify-center relative">
         <LeftGo
           onClick={() => {

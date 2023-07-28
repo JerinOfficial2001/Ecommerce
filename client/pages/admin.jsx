@@ -2,11 +2,7 @@ import Card from "@/src/component/Admin/Card";
 import CardContainer from "@/src/component/Admin/CardContainer";
 import Products from "@/src/component/Admin/Products";
 import UserContainer from "@/src/component/Admin/UsersContainer";
-import {
-  deleteProducts,
-  productsFetch,
-  usersFetch,
-} from "@/src/controller/User";
+import { productsFetch, usersFetch } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { getItemsByID } from "@/src/redux/productsSlices";
 import { useRouter } from "next/router";
@@ -15,9 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Admin({ userData }) {
   const [singleProducts, setsingleProducts] = useState({});
+
   const [clicky, setclicky] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(productsFetch());
     dispatch(usersFetch());
@@ -93,9 +91,7 @@ export default function Admin({ userData }) {
           </button>
         </CardContainer>
         {clicky === "products" ? <Products products={products} /> : null}
-        {clicky === "users" ? (
-          <UserContainer setclicky={setclicky} users={users} />
-        ) : null}
+        {clicky === "users" ? <UserContainer users={users} /> : null}
       </div>
     </Layout>
   );

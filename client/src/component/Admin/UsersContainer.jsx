@@ -2,11 +2,13 @@ import React from "react";
 import CardContainer from "./CardContainer";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { getItemsByID } from "@/src/redux/productsSlices";
 import Card from "./Card";
-import { deleteUser } from "@/src/controller/User";
+import { deleteUser, usersFetch } from "@/src/controller/User";
 
-export default function UserContainer({ users, setclicky }) {
+export default function UserContainer({
+  users,
+ 
+}) {
   const router = useRouter();
   const dispatch = useDispatch();
   return (
@@ -14,8 +16,9 @@ export default function UserContainer({ users, setclicky }) {
       {users.map((i) => (
         <Card
           editBtn={"false"}
-          deleteHandler={() => {
-            deleteUser(i._id);
+          deleteHandler={async () => {
+            await deleteUser(i._id);
+            await dispatch(usersFetch());
           }}
           title={i.uname}
           text={i.email}

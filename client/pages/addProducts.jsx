@@ -65,15 +65,18 @@ export default function AddProducts() {
         spec: "",
         array: "",
       });
-      console.log(inputDatas);
-      toast.success("Added Successfully");
+     
+    
       router.push("/admin");
     } else {
       toast.error("All fields are mandatory");
     }
   };
+  const windows =
+    typeof window !== "undefined" && window.localStorage.getItem("userData");
+  const userData = JSON.parse(windows);
   return (
-    <Layout>
+    <Layout uname={userData?.uname}>
       <div className="flex gap-2 items-center w-[100%] h-[670px] justify-center relative">
         <LeftGo
           onClick={() => {
