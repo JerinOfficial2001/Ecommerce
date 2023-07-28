@@ -50,7 +50,7 @@ export const loginUser = async (email, password) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "UserRegistered");
-        if (data.status == "ok") {
+        if (data.status === "ok") {
           toast.success("login successful");
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("loggedIn", data.data);
