@@ -23,7 +23,7 @@ exports.getProductsByArray = async (req, res) => {
 };
 exports.getProductsById = async (req, res) => {
   try {
-    const products = await Product.findById(req.params.id);
+    const products = await Product.findById(req.body);
 
     res.status(200).send(products);
   } catch (error) {

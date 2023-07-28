@@ -16,6 +16,6 @@ router.put("/:id", updateProducts);
 router.delete("/:id", deleteProducts);
 
 router.get("/array", getProductsByArray);
-router.post("/:id", getProductsById);
+router.get("/id", getProductsById);
 
 module.exports = router;
