@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { productsCreate, productsFetch, usersFetch } from "../controller/User";
+import {
+  getProductById,
+  getProductsByArray,
+  productsCreate,
+  productsFetch,
+  usersFetch,
+} from "../controller/User";
 
 const initialState = {
   items: [],
@@ -10,6 +16,8 @@ const initialState = {
   singleImg: {},
   singleProduct: {},
   users: [],
+  productsByArray: [],
+  productById: {},
 };
 
 const productsSlices = createSlice({
@@ -67,8 +75,27 @@ const productsSlices = createSlice({
     [usersFetch.rejected]: (state, action) => {
       state.createStatus = "rejected";
     },
+    [getProductsByArray.pending]: (state, action) => {
+      state.createStatus = "pending";
+    },
+    [getProductsByArray.fulfilled]: (state, { payload }) => {
+      state.productsByArray = payload;
+      state.createStatus = "success";
+    },
+    [getProductsByArray.rejected]: (state, action) => {
+      state.createStatus = "rejected";
+    },
+    [getProductById.pending]: (state, action) => {
+      state.createStatus = "pending";
+    },
+    [getProductById.fulfilled]: (state, { payload }) => {
+      state.productById = payload;
+      state.createStatus = "success";
+    },
+    [getProductById.rejected]: (state, action) => {
+      state.createStatus = "rejected";
+    },
   },
 });
 export default productsSlices.reducer;
-export const { getProductsByID, getimgByID, getImg, getItemsByID } =
-  productsSlices.actions;
+export const { getimgByID, getImg, getItemsByID } = productsSlices.actions;

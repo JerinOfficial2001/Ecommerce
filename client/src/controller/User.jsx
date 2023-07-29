@@ -115,14 +115,36 @@ export const productsCreate = createAsyncThunk(
     }
   }
 );
-export const getProductsByArray = async (data) => {
-  try {
-    const res = await axios.post(url + "/array");
-    return res.data;
-  } catch (error) {
-    console.log(error);
+export const getProductsByArray = createAsyncThunk(
+  "/products/getByArray",
+  async (datas) => {
+    // console.log(datas, "DATAS");
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/api/products/${datas}`
+      );
+      // console.log(res.data, "RES");
+      return res?.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
-};
+);
+export const getProductById = createAsyncThunk(
+  "/products/getById",
+  async (id) => {
+    // console.log(id, "ID");
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/api/products/array/${id}`
+      );
+      // console.log(res.data, "RES");
+      return res?.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 export const deleteProducts = async (id) => {
   try {
     await fetch(url + `/${id}`, {

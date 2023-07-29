@@ -4,6 +4,7 @@ import NavList from "@/src/component/NavList";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
 import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
+import { getProductsByArray } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { getItemsByID } from "@/src/redux/productsSlices";
 import { filterNavItems } from "@/src/utils/Filter";
@@ -22,11 +23,14 @@ export default function Home({ userData }) {
   const item = SLIDES[index];
   const dispatch = useDispatch();
 
-  const windows =
-    typeof window !== "undefined" && window.localStorage.getItem("items");
-  const items = JSON.parse(windows);
+  // const productByArray = useSelector((state) => state.products.productByArray);
+  // console.log("productByArray", productByArray);
 
-  // const items = useSelector((state) => state.products.items);
+  // const windows =
+  //   typeof window !== "undefined" && window.localStorage.getItem("items");
+  // const items = JSON.parse(windows);
+
+  const items = useSelector((state) => state.products.items);
   const singleProduct = useSelector((state) => state.products.singleProduct);
   // console.log("singleProduct", singleProduct);
   typeof window !== "undefined" &&
@@ -71,11 +75,15 @@ export default function Home({ userData }) {
         <ProductContainer
           name={"Top Offers"}
           onClick={() => {
-            
-            router.push({
-              pathname: "/collectionPage",
-              query: { data: "Top Offers" },
-            });
+            // await dispatch(getProductsByArray("Top Offers"));
+            router.push(
+              {
+                pathname: "/collectionPage",
+                query: { data: "Top Offers" },
+              },
+              null,
+              { shallow: true }
+            );
           }}
         >
           <div className="h-[100%] w-[100%] ">
@@ -83,11 +91,14 @@ export default function Home({ userData }) {
               {filterNavItems("Top Offers").map((i) => (
                 <ProductCard
                   onclick={() => {
-                    dispatch(getItemsByID(i._id));
-                    router.push({
-                      pathname: "/productPage",
-                      query: i,
-                    });
+                    router.push(
+                      {
+                        pathname: "/productPage",
+                        query: i,
+                      },
+                      null,
+                      { shallow: true }
+                    );
                   }}
                   key={i._id}
                   img={i.image.url}
@@ -103,10 +114,14 @@ export default function Home({ userData }) {
         <ProductContainer
           name={"Today's Fashion Deals"}
           onClick={() => {
-            router.push({
-              pathname: "/collectionPage",
-              query: { data: "Today's Fashion Deals" },
-            });
+            router.push(
+              {
+                pathname: "/collectionPage",
+                query: { data: "Today's Fashion Deals" },
+              },
+              null,
+              { shallow: true }
+            );
           }}
         >
           <div className="h-[100%] w-[100%] ">
@@ -115,10 +130,14 @@ export default function Home({ userData }) {
                 <ProductCard
                   onclick={() => {
                     dispatch(getItemsByID(i._id));
-                    router.push({
-                      pathname: "/productPage",
-                      query: i,
-                    });
+                    router.push(
+                      {
+                        pathname: "/productPage",
+                        query: i?._id,
+                      },
+                      null,
+                      { shallow: true }
+                    );
                   }}
                   key={i._id}
                   img={i.image.url}
@@ -133,10 +152,14 @@ export default function Home({ userData }) {
         </ProductContainer>
         <ProductContainer
           onClick={() => {
-            router.push({
-              pathname: "/collectionPage",
-              query: { data: "Best of Electronics" },
-            });
+            router.push(
+              {
+                pathname: "/collectionPage",
+                query: { data: "Best of Electronics" },
+              },
+              null,
+              { shallow: true }
+            );
           }}
           name={"Best of Electronics"}
         >
@@ -146,10 +169,14 @@ export default function Home({ userData }) {
                 <ProductCard
                   onclick={() => {
                     dispatch(getItemsByID(i._id));
-                    router.push({
-                      pathname: "/productPage",
-                      query: i,
-                    });
+                    router.push(
+                      {
+                        pathname: "/productPage",
+                        query: i,
+                      },
+                      null,
+                      { shallow: true }
+                    );
                   }}
                   key={i._id}
                   img={i.image.url}

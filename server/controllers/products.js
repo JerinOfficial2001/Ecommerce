@@ -12,8 +12,9 @@ exports.getAllProducts = async (req, res) => {
 };
 
 exports.getProductsByArray = async (req, res) => {
+  // console.log("REQ", req.params.array);
   try {
-    const products = await Product.find(req.body);
+    const products = await Product.find({ array: req.params.array });
 
     res.status(200).send(products);
   } catch (error) {
@@ -23,7 +24,7 @@ exports.getProductsByArray = async (req, res) => {
 };
 exports.getProductsById = async (req, res) => {
   try {
-    const products = await Product.findById(req.body);
+    const products = await Product.findOne({ _id: req.params.id });
 
     res.status(200).send(products);
   } catch (error) {

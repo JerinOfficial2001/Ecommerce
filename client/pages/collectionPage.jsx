@@ -1,23 +1,32 @@
 import ShortNavList from "@/src/component/ShortNavList";
 import Text from "@/src/component/Text";
+import { getProductsByArray } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { getItemsByID } from "@/src/redux/productsSlices";
 import { filterNavItems } from "@/src/utils/Filter";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default  function collectionPage() {
+export default function collectionPage() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { query } = router;
   // console.log("QUERY", query);
-  const dispatch = useDispatch();
+  const refresh = dispatch(getProductsByArray(query?.data));
+
+  useEffect(() => {
+    refresh;
+  }, [refresh]);
+
+  const productsByArray = useSelector(
+    (state) => state.products.productsByArray
+  );
+  // console.log("productByArray", productByArray.length);
 
   const windows =
-    typeof window !== "undefined" &&
-     window.localStorage.getItem("userData");
+    typeof window !== "undefined" && window.localStorage.getItem("userData");
   const userData = JSON.parse(windows);
- 
 
   return (
     <Layout customClass={"gap-0"} uname={userData?.uname}>
@@ -27,20 +36,23 @@ export default  function collectionPage() {
           <div className="w-[100%] h-[120px] border-b-2 flex-col flex items-center justify-center gap-2">
             <Text name={query.data} customClass={"text-xl font-bold"} />
             <Text
-              name={filterNavItems(query.data).length + " Items"}
+              name={productsByArray?.length + " Items"}
               customClass={"text-[gray]"}
             />
           </div>
           <div className="w-[100%] grid grid-cols-4 gap-5">
-            {filterNavItems(query.data).map((i) => (
+            {productsByArray?.map((i) => (
               <div
                 className=" h-[300px] w-[320px] p-2 flex flex-col items-center justify-center gap-2 cursor-pointer"
                 onClick={() => {
-                  dispatch(getItemsByID(i._id));
-                  router.push({
-                    pathname: "/productPage",
-                    query: i,
-                  });
+                  router.push(
+                    {
+                      pathname: "/productPage",
+                      query: i?._id,
+                    },
+                    null,
+                    { shallow: true }
+                  );
                 }}
               >
                 <div className="flex items-center justify-center w-[100%] h-[75%]">
