@@ -222,7 +222,7 @@ export default function TopBar({
                 onClick={
                   userData?.uname
                     ? () => {
-                        router.push("/cartPage");
+                        router.push("/cartPage", null, { shallow: true });
                       }
                     : () => {
                         router.push("/authReq");

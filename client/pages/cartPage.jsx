@@ -1,10 +1,22 @@
 import CartCard from "@/src/component/CartCard";
 import Text from "@/src/component/Text";
+import { getCartById, removeCartItem } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { classNames } from "@/src/utils/Classname";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CartPage() {
+  const dispatch = useDispatch();
+  const windows =
+    typeof window !== "undefined" && window.localStorage.getItem("userData");
+  const userData = JSON.parse(windows);
+  // console.log("UserData", userData);
+  dispatch(getCartById(userData?._id));
+
+  const cart = useSelector((state) => state.products.cart);
+  // console.log("cart", cart);
+
   const [activeClass, setactiveClass] = useState("/");
   return (
     <Layout cartBtnHide={"true"}>
@@ -73,8 +85,20 @@ export default function CartPage() {
                 />
               </div>
               <div className="flex-col flex w-[100%] ">
-                <CartCard />
-               
+                {cart?.map((i) => {
+                  // console.log("Data", i.title);
+                  return (
+                    <CartCard
+                      deleteHandler={async () => {
+                        await removeCartItem(i._id);
+                      }}
+                      title={i.title}
+                      img={i.image.url}
+                      price={i.price}
+                      description={i.category}
+                    />
+                  );
+                })}
                 <div className="bg-[white] shadow-inner sticky bottom-0 h-[80px] w-[100%] flex items-center justify-end p-6">
                   <button className="flex items-center justify-center gap-2 text-[white] bg-[#fb641b] w-[31%] p-4 font-bold text-md">
                     PLACE ORDER
@@ -89,7 +113,6 @@ export default function CartPage() {
                     customClass={"text-lg font-semibold"}
                   />
                 </div>
-                <CartCard btnName={"MOVE TO CART"} />
               </div>
             </div>
           )}

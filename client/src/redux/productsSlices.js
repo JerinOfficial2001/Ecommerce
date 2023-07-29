@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getCartById,
   getProductById,
   getProductsByArray,
   productsCreate,
@@ -18,6 +19,7 @@ const initialState = {
   users: [],
   productsByArray: [],
   productById: {},
+  cart: [],
 };
 
 const productsSlices = createSlice({
@@ -93,6 +95,16 @@ const productsSlices = createSlice({
       state.createStatus = "success";
     },
     [getProductById.rejected]: (state, action) => {
+      state.createStatus = "rejected";
+    },
+    [getCartById.pending]: (state, action) => {
+      state.createStatus = "pending";
+    },
+    [getCartById.fulfilled]: (state, { payload }) => {
+      state.cart = payload;
+      state.createStatus = "success";
+    },
+    [getCartById.rejected]: (state, action) => {
       state.createStatus = "rejected";
     },
   },

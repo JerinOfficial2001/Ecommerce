@@ -131,7 +131,7 @@ export const getProductsByArray = createAsyncThunk(
 export const getProductById = createAsyncThunk(
   "/products/getById",
   async (id) => {
-    console.log(id, "ID");
+    // console.log(id, "ID");
     try {
       const res = await axios.get(url + `/array/${id}`);
       // console.log(res.data, "RES");
@@ -196,6 +196,44 @@ export const updateProducts = async (
           console.log(data);
         }
       });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getCartById = createAsyncThunk(
+  "/cart/getCartById",
+  async (user_id) => {
+    // console.log(user_id, "ID");
+    try {
+      const res = await axios.get(url + `/cart/${user_id}`);
+      // console.log(res.data.data, "RES");
+      return res?.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+export const addCart = async (product_id, user_id) => {
+  console.log(product_id, user_id, "values");
+  try {
+    const res = await axios.post(url + "/addtocart", { product_id, user_id });
+    console.log(res.data.data, "RES");
+    if (res.data.status === "added") {
+      toast.success("Item Added to Cart");
+    }
+    return res?.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const removeCartItem = async (id) => {
+  // console.log(user_id, "ID");
+  try {
+    const res = await axios.delete(url + `/cart/${id}`);
+    // console.log(res.data.data, "RES");
+    if (res.data.status === "deleted") {
+      toast.success("Item removed");
+    }
   } catch (error) {
     console.log(error);
   }

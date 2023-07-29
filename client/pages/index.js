@@ -75,7 +75,7 @@ export default function Home() {
         >
           <div className="h-[100%] w-[100%] ">
             <Slider {...settings}>
-              {filterNavItems("Top Offers").map((i) => (
+              {filterNavItems("Top Offers")?.map((i) => (
                 <ProductCard
                   onclick={() => {
                     typeof window !== "undefined" &&
@@ -117,7 +117,7 @@ export default function Home() {
         >
           <div className="h-[100%] w-[100%] ">
             <Slider {...settings}>
-              {filterNavItems("Today's Fashion Deals").map((i) => (
+              {filterNavItems("Today's Fashion Deals")?.map((i) => (
                 <ProductCard
                   onclick={() => {
                     typeof window !== "undefined" &&
@@ -160,7 +160,7 @@ export default function Home() {
         >
           <div className="h-[100%] w-[100%] ">
             <Slider {...settings}>
-              {filterNavItems("Best of Electronics").map((i) => (
+              {filterNavItems("Best of Electronics")?.map((i) => (
                 <ProductCard
                   onclick={() => {
                     typeof window !== "undefined" &&

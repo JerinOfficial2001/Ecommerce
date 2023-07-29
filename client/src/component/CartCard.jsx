@@ -1,7 +1,15 @@
 import React from "react";
 import Text from "./Text";
 
-export default function CartCard({saveHandler, deleteHandler,price, description, title, img, btnName }) {
+export default function CartCard({
+  saveHandler,
+  deleteHandler,
+  price,
+  description,
+  title,
+  img,
+  btnName,
+}) {
   return (
     <div className="bg-[white] w-[100%] h-[200px] p-4 flex items-center border-b-[1px]">
       <div className=" h-[100%] w-[140px] p-2">
@@ -28,8 +36,10 @@ export default function CartCard({saveHandler, deleteHandler,price, description,
         <div className="flex items-center justify-between w-[40%]">
           <Text
             name={btnName ? btnName : "SAVE FOR LATER"}
-            customClass={"cursor-pointer text-md font-semibold "}
-          onclick={saveHandler}
+            customClass={
+              "cursor-pointer text-md font-semibold hover:text-[#2a6fed]"
+            }
+            onclick={saveHandler}
           />
           <Text
             name={"REMOVE"}
