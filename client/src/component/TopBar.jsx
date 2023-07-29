@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { classNames } from "../utils/Classname";
 import SearchBar from "../component/SearchBar";
 import Text from "../component/Text";
@@ -14,56 +14,62 @@ import { IoMdGift } from "react-icons/io";
 import { BiPackage } from "react-icons/bi";
 import LoginModal from "./LoginModal";
 import { TbGiftCard } from "react-icons/tb";
+import { RiLogoutBoxLine } from "react-icons/ri";
 import CartIcon from "./Icons/CartIcon";
 
 export default function TopBar({
+  cartBtnHide,
   navColor,
-  CartOnclick,
   hoverIt,
   searchItems,
-  uname,
 }) {
   const [btnEffect, setbtnEffect] = useState("");
   const router = useRouter();
   const [login, setlogin] = useState(false);
+
+  const windows =
+    typeof window !== "undefined" && window.localStorage.getItem("userData");
+  const userData = JSON.parse(windows);
+
   const signIN_Options = [
     {
       id: 0,
       title: "My Profile",
       icon: <PiUserBold />,
-      to: "/",
+      to: null,
     },
     {
       id: 1,
       title: "MrJkart Plus Zone",
       icon: <TiPlusOutline />,
-      to: "/",
+      to: null,
     },
     {
       id: 2,
       title: "Orders",
       icon: <BiPackage />,
-      to: "/",
+      to: null,
     },
     {
       id: 3,
       title: "Wishlist",
       icon: <MdOutlineFavoriteBorder />,
-      to: "/",
+      to: null,
     },
     {
       id: 4,
       title: "Rewards",
       icon: <IoMdGift />,
-      to: "/",
+      to: null,
     },
     {
       id: 5,
       title: "Gift Cards",
       icon: <TbGiftCard />,
-      to: "/",
+      to: null,
     },
   ];
+
   return (
     <div
       className={classNames(
@@ -111,20 +117,22 @@ export default function TopBar({
           </button>
         ) : (
           <>
-            <div
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => {
-                router.push("/authReq");
-              }}
-            >
-              <div className="text-[25px]">
-                <CiShop />
+            {cartBtnHide === "true" ? null : (
+              <div
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={() => {
+                  router.push("/authReq");
+                }}
+              >
+                <div className="text-[25px]">
+                  <CiShop />
+                </div>
+                <Text
+                  name={"Become a Seller"}
+                  customClass={"text-md font-semibold "}
+                />
               </div>
-              <Text
-                name={"Become a Seller"}
-                customClass={"text-md font-semibold "}
-              />
-            </div>
+            )}
 
             <div
               className={classNames(
@@ -135,14 +143,14 @@ export default function TopBar({
                 setbtnEffect("SignIn");
               }}
               onClick={() => {
-                uname ? null : setlogin(true);
+                userData?.uname ? null : setlogin(true);
               }}
             >
               <div className="text-[25px]">
                 <PiUserBold />
               </div>
               <Text
-                name={uname ? uname : "Sign in"}
+                name={userData?.uname ? userData?.uname : "Sign in"}
                 customClass={"text-md font-semibold hover:text-white"}
               />
 
@@ -157,14 +165,14 @@ export default function TopBar({
                   setbtnEffect("");
                 }}
                 customClass={
-                  "h-[310px] w-[280px] top-12 left-[38%] flex flex-col items-center text-black"
+                  " w-[280px] top-12  flex flex-col items-center text-black pb-2"
                 }
               >
                 <div className="p-2 h-[50px] w-[100%] border-b-[1px]  border-b-[lavender] flex items-center justify-between">
                   <Text name={"New Customer?"} customClass={"font-semibold "} />
                   <Text
                     onclick={() => {
-                      uname
+                      userData?.uname
                         ? null
                         : router.push({
                             pathname: "/loginPage",
@@ -173,61 +181,67 @@ export default function TopBar({
                             },
                           });
                     }}
-                    name={uname ? uname : "Sign Up"}
+                    name={userData?.uname ? userData?.uname : "Sign Up"}
                     customClass={"font-semibold text-[#1c41d6] text-lg"}
                   />
                 </div>
-                <div className="k h-[83%]  w-[100%] flex flex-col gap-2 justify-between">
+                <div className="h-[83%]  w-[100%] flex flex-col gap-2 justify-between">
                   {signIN_Options.map((i) => (
                     <div
-                      key={i.id}
+                      key={i?.id}
                       className="p-[6px] pl-4 flex items-center gap-2 hover:bg-[#f1f2f4]"
                     >
-                      <div>{i.icon}</div>
+                      <div>{i?.icon}</div>
                       <Text
-                        name={i.title}
+                        name={i?.title}
                         customClass={"text-md font-[14px] "}
                       />
                     </div>
                   ))}
+                  {userData?.uname ? (
+                    <div
+                      onClick={() => {
+                        window.localStorage.clear();
+                        window.location.href = "/";
+                      }}
+                      className="p-[6px] pl-4 flex items-center gap-2 hover:bg-[#f1f2f4]"
+                    >
+                      <RiLogoutBoxLine />
+                      <Text
+                        name={"Logout"}
+                        customClass={"text-md font-[14px] "}
+                      />
+                    </div>
+                  ) : null}
                 </div>
               </HoverCard>
             ) : null}
-            <div
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={
-                CartOnclick
-                  ? CartOnclick
-                  : () => {
-                      router.push("/authReq");
-                    }
-              }
-            >
-              <div className="text-[25px]">
-                <CartIcon />
+            {cartBtnHide === "true" ? null : (
+              <div
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={
+                  userData?.uname
+                    ? () => {
+                        router.push("/cartPage");
+                      }
+                    : () => {
+                        router.push("/authReq");
+                      }
+                }
+              >
+                <div className="text-[25px]">
+                  <CartIcon />
+                </div>
+                <Text name={"Cart"} customClass={"text-md font-semibold "} />
               </div>
-              <Text name={"Cart"} customClass={"text-md font-semibold "} />
-            </div>
-            <div className="h-[100%] flex items-center text-[25px] relative">
+            )}
+            {/* <div className="h-[100%] flex items-center text-[25px] relative">
               <PiDotsThreeVertical
                 onClick={() => {
                   setbtnEffect("vertBtn");
                 }}
               />
-              {"vertBtn" === btnEffect ? (
-                <div className="rounded-md top-[60px] right-0 absolute bg-[white] shadow">
-                  <button
-                    className="px-7 text-black font-semibold p-2 hover:bg-[#19a4db2a] hover-border-2 border-[black]"
-                    onClick={() => {
-                      window.localStorage.clear();
-                      window.location.href = "./";
-                    }}
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : null}
-            </div>
+            </div> */}
           </>
         )}
       </div>

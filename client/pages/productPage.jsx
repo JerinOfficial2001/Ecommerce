@@ -11,11 +11,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function ProductPage() {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const data = router.query;
+  // const router = useRouter();
 
+  const windowsID =
+    typeof window !== "undefined" && window.localStorage.getItem("ProductID");
+  const ProductID = JSON.parse(windowsID);
   // console.log("QUERY", data._id);
-  const refresh = dispatch(getProductById(data?._id));
+  const refresh = dispatch(getProductById(ProductID));
 
   useEffect(() => {
     refresh;
@@ -24,12 +26,12 @@ export default function ProductPage() {
   const productById = useSelector((state) => state.products.productById);
   // console.log("productById", productById);
 
-  const windows =
-    typeof window !== "undefined" && window.localStorage.getItem("userData");
-  const userData = JSON.parse(windows);
+  // const windows =
+  //   typeof window !== "undefined" && window.localStorage.getItem("userData");
+  // const userData = JSON.parse(windows);
   // console.log("UserData", userData);
   return (
-    <Layout customChild={"gap-0"} customClass={"gap-0"} uname={userData?.uname}>
+    <Layout customChild={"gap-0"} customClass={"gap-0"} >
       <ShortNavList />
       <div className="h-[100%] w-[90%] flex ">
         <div className="bg-white h-[92vh] w-[40%] p-2 flex-col flex sticky top-14">

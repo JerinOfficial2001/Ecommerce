@@ -43,5 +43,5 @@ export default function UserDetails() {
   typeof window !== "undefined" &&
     window.localStorage.setItem("userData", JSON.stringify(userData));
 
-  return admin ? <Admin userData={userData} /> : <Home userData={userData} />;
+  return admin ? <Admin userData={userData} /> : <Home />;
 }

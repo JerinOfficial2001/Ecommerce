@@ -5,12 +5,12 @@ import React from "react";
 
 export default function CategoryPage() {
   const router = useRouter();
-  const windows =
-    typeof window !== "undefined" && window.localStorage.getItem("userData");
-  const userData = JSON.parse(windows);
-  console.log("UserData", userData);
+  // const windows =
+  //   typeof window !== "undefined" && window.localStorage.getItem("userData");
+  // const userData = JSON.parse(windows);
+  // console.log("UserData", userData);
   return (
-    <Layout customClass={"gap-0"} uname={userData?.uname}>
+    <Layout customClass={"gap-0"}>
       <ShortNavList />
       <div className="h-[100%] w-[100%] flex gap-3 p-3">
         <div className="bg-white h-[800px] w-[20%]">hello</div>

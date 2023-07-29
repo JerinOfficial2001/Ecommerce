@@ -120,9 +120,7 @@ export const getProductsByArray = createAsyncThunk(
   async (datas) => {
     // console.log(datas, "DATAS");
     try {
-      const res = await axios.get(
-        `http://localhost:4000/api/products/${datas}`
-      );
+      const res = await axios.get(url + `/${datas}`);
       // console.log(res.data, "RES");
       return res?.data;
     } catch (error) {
@@ -133,11 +131,9 @@ export const getProductsByArray = createAsyncThunk(
 export const getProductById = createAsyncThunk(
   "/products/getById",
   async (id) => {
-    // console.log(id, "ID");
+    console.log(id, "ID");
     try {
-      const res = await axios.get(
-        `http://localhost:4000/api/products/array/${id}`
-      );
+      const res = await axios.get(url + `/array/${id}`);
       // console.log(res.data, "RES");
       return res?.data;
     } catch (error) {

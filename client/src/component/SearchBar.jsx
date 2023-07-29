@@ -1,7 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
-import { MyContext } from "../context/MyContext";
 import { classNames } from "../utils/Classname";
 import SearchFilter from "../utils/SearchFilter";
 

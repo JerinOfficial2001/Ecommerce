@@ -14,6 +14,9 @@ export default function SearchFilter({
         onMouseLeave={() => {
           setloading("");
         }}
+        onLostPointerCapture={() => {
+          setloading("");
+        }}
         className={classNames(
           customWidth,
           "container-snap p-2 bg-white shadow rounded-md max-h-[290px]  overflow-y-scroll top-[90%] absolute flex-col flex items-center  gap-2"

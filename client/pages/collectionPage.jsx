@@ -24,12 +24,12 @@ export default function collectionPage() {
   );
   // console.log("productByArray", productByArray.length);
 
-  const windows =
-    typeof window !== "undefined" && window.localStorage.getItem("userData");
-  const userData = JSON.parse(windows);
+  // const windows =
+  //   typeof window !== "undefined" && window.localStorage.getItem("userData");
+  // const userData = JSON.parse(windows);
 
   return (
-    <Layout customClass={"gap-0"} uname={userData?.uname}>
+    <Layout customClass={"gap-0"} >
       <ShortNavList />
       <div className="w-[100%] pl-2 pr-2 ">
         <div className="p-2 rounded-md bg-white w-[100%] flex-col flex items-center justify-center">
@@ -45,10 +45,14 @@ export default function collectionPage() {
               <div
                 className=" h-[300px] w-[320px] p-2 flex flex-col items-center justify-center gap-2 cursor-pointer"
                 onClick={() => {
+                  typeof window !== "undefined" &&
+                    window.localStorage.setItem(
+                      "ProductID",
+                      JSON.stringify(i?._id)
+                    );
                   router.push(
                     {
                       pathname: "/productPage",
-                      query: i?._id,
                     },
                     null,
                     { shallow: true }
