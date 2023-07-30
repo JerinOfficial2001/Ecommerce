@@ -4,24 +4,43 @@ import NavList from "@/src/component/NavList";
 import ProductCard from "@/src/component/ProductCard";
 import ProductContainer from "@/src/component/ProductContainer";
 import { SampleNextArrow, SamplePrevArrow } from "@/src/component/SliderModule";
+import { getCartById } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import { filterNavItems } from "@/src/utils/Filter";
 import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ userData }) {
   const [hoverIt, sethoverIt] = useState("");
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const item = SLIDES[index];
   // const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
 
+  // console.log("UserData", userData);
+  const fetchCartById = async () => {
+    await dispatch(getCartById(userData?._id));
+  };
+  useEffect(() => {
+    fetchCartById();
+  }, []);
+  const cart = useSelector((state) => state.products.cart);
+  // console.log("cart", cart);
+
+  const filterCartType = () => {
+    const filteredData = cart?.filter((i) => i.cartType === "addToCart");
+    return filteredData;
+  };
+  const cartLength = filterCartType().length;
+  typeof window !== "undefined" &&
+    window.localStorage.setItem("cartLength", cartLength);
 
   const prevSlide = () => {
     setIndex((index - 1) % SLIDES.length);
@@ -40,13 +59,7 @@ export default function Home() {
   };
   return (
     <>
-      <Layout
-     
-        hoverIt={hoverIt}
-        sethoverIt={sethoverIt}
-        navColor={"bg-white"}
-       
-      >
+      <Layout hoverIt={hoverIt} sethoverIt={sethoverIt} navColor={"bg-white"}>
         <NavList />
         <ProductContainer
           divertor={true}
@@ -62,7 +75,6 @@ export default function Home() {
         <ProductContainer
           name={"Top Offers"}
           onClick={() => {
-            // await dispatch(getProductsByArray("Top Offers"));
             router.push(
               {
                 pathname: "/collectionPage",
@@ -93,7 +105,7 @@ export default function Home() {
                   }}
                   key={i._id}
                   img={i.image.url}
-                  price={i.price}
+                  price={i.price.toLocaleString()}
                   category={
                     i.title.length > 29 ? i.title.slice(0, 29) + "..." : i.title
                   }
@@ -136,7 +148,7 @@ export default function Home() {
                   }}
                   key={i._id}
                   img={i.image.url}
-                  price={i.price}
+                  price={i.price.toLocaleString()}
                   category={
                     i.title.length > 25 ? i.title.slice(0, 25) + "..." : i.title
                   }
@@ -178,7 +190,7 @@ export default function Home() {
                   }}
                   key={i._id}
                   img={i.image.url}
-                  price={"₹ " + i.price}
+                  price={i?.price?.toLocaleString()}
                   category={
                     i.title.length > 29 ? i.title.slice(0, 29) + "..." : i.title
                   }

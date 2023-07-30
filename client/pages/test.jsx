@@ -59,7 +59,7 @@ export default function test() {
   };
   useEffect(() => {
     getImage();
-  }, [myArray]);
+  }, []);
   const deleteImage = async (id) => {
     try {
       await fetch(`http://localhost:4000/api/image/${id}`, {

@@ -143,16 +143,15 @@ export default function TopBar({
                 setbtnEffect("SignIn");
               }}
               onClick={() => {
-                userData?.uname ? null : setlogin(true);
+                userData ? null : setlogin(true);
               }}
             >
               <div className="text-[25px]">
                 <PiUserBold />
               </div>
-              <Text
-                name={userData?.uname ? userData?.uname : "Sign in"}
-                customClass={"text-md font-semibold hover:text-white"}
-              />
+              <p className={"text-md font-semibold hover:text-white"}>
+                {userData ? userData?.uname : "Sign in"}
+              </p>
 
               <div className="text-[20px]">
                 {"SignIn" === btnEffect ? <BiChevronUp /> : <BiChevronDown />}
@@ -172,7 +171,7 @@ export default function TopBar({
                   <Text name={"New Customer?"} customClass={"font-semibold "} />
                   <Text
                     onclick={() => {
-                      userData?.uname
+                      userData
                         ? null
                         : router.push({
                             pathname: "/loginPage",
@@ -181,7 +180,7 @@ export default function TopBar({
                             },
                           });
                     }}
-                    name={userData?.uname ? userData?.uname : "Sign Up"}
+                    name={userData ? userData?.uname : "Sign Up"}
                     customClass={"font-semibold text-[#1c41d6] text-lg"}
                   />
                 </div>
@@ -198,7 +197,7 @@ export default function TopBar({
                       />
                     </div>
                   ))}
-                  {userData?.uname ? (
+                  {userData ? (
                     <div
                       onClick={() => {
                         window.localStorage.clear();
@@ -220,7 +219,7 @@ export default function TopBar({
               <div
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={
-                  userData?.uname
+                  userData
                     ? () => {
                         router.push("/cartPage", null, { shallow: true });
                       }

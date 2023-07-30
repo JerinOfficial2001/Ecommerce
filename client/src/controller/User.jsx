@@ -238,3 +238,20 @@ export const removeCartItem = async (id) => {
     console.log(error);
   }
 };
+export const editCartType = async (id, cartType) => {
+  // console.log(cartType, "cartType");
+  try {
+    const res = await axios.put(url + `/cart/${id}`, { cartType });
+    // console.log(res.data.data, "RES");
+    if (res.data.status === "moved") {
+      if (res.data.data.cartType === "saveForLater") {
+        toast.success("Moved to Saved For Later");
+      }
+      if (res.data.data.cartType === "addToCart") {
+        toast.success("Moved to Add To Cart");
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

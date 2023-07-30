@@ -1,5 +1,7 @@
 import React from "react";
 import Text from "./Text";
+import DeleteModal from "./DeleteModal";
+import QuantityCount from "./QuantityCount";
 
 export default function CartCard({
   saveHandler,
@@ -9,11 +11,25 @@ export default function CartCard({
   title,
   img,
   btnName,
+  setactiveClass,
+  activeClass,
+ 
 }) {
   return (
     <div className="bg-[white] w-[100%] h-[200px] p-4 flex items-center border-b-[1px]">
-      <div className=" h-[100%] w-[140px] p-2">
-        <img src={img} className="object-contain h-[100%] w-[100%]" alt="" />
+      <DeleteModal
+        title={"Remove Item"}
+        alert={"Are you sure you want to remove this item?"}
+        open={activeClass === "remove"}
+        close={() => {
+          setactiveClass("!remove");
+        }}
+        submitHandler={deleteHandler}
+      />
+      <div className=" h-[100%] w-[140px] p-2 flex-col flex items-center gap-2">
+        <img src={img} className="object-contain h-[80%] w-[100%]" alt="" />
+
+        <QuantityCount />
       </div>
       <div className="h-[100%] w-[80%] flex-col flex justify-between p-2 ">
         <div>
@@ -46,7 +62,9 @@ export default function CartCard({
             customClass={
               "text-md font-semibold cursor-pointer hover:text-[#2a6fed]"
             }
-            onclick={deleteHandler}
+            onclick={() => {
+              setactiveClass("remove");
+            }}
           />
         </div>
       </div>

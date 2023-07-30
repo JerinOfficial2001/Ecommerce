@@ -5,8 +5,11 @@ const { useSelector, useDispatch } = require("react-redux");
 
 export function filterNavItems(type) {
   const dispatch = useDispatch();
+  const fetchProducts = async () => {
+    await dispatch(productsFetch());
+  };
   useEffect(() => {
-    dispatch(productsFetch());
+    fetchProducts();
   }, []);
 
   const items = useSelector((state) => state.products.items);

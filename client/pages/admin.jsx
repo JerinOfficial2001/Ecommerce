@@ -27,11 +27,7 @@ export default function Admin({ userData }) {
   const singleProduct = useSelector((state) => state.products.singleProduct);
 
   return (
-    <Layout
-      uname={userData?.uname}
-      customClass={"gap-0"}
-      searchItems={products}
-    >
+    <Layout customClass={"gap-0"} searchItems={products}>
       <div className="h-[92vh] w-[100%] flex items-center p-2 gap-2">
         {/* <div className="h-[100%] w-[50%] p-4 ">hello</div> */}
         <CardContainer

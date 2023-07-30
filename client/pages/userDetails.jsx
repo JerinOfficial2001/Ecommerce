@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { auth } from "@/src/redux/api";
-import UserPage from "./userPage";
 import Admin from "./admin";
 import { toast } from "react-hot-toast";
 import Home from ".";
@@ -43,5 +42,5 @@ export default function UserDetails() {
   typeof window !== "undefined" &&
     window.localStorage.setItem("userData", JSON.stringify(userData));
 
-  return admin ? <Admin userData={userData} /> : <Home />;
+  return admin ? <Admin /> : <Home userData={userData} />;
 }

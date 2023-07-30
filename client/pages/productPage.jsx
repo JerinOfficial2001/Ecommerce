@@ -6,21 +6,25 @@ import Text from "@/src/component/Text";
 import { addCart, getCartById, getProductById } from "@/src/controller/User";
 import Layout from "@/src/layout/Layout";
 import React, { useEffect } from "react";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { PiShoppingCartFill } from "react-icons/pi";
+import { useRouter } from "next/router";
 
 export default function ProductPage() {
   const dispatch = useDispatch();
   // const router = useRouter();
-
+  const router = useRouter();
   const windowsID =
     typeof window !== "undefined" && window.localStorage.getItem("ProductID");
   const ProductID = JSON.parse(windowsID);
   // console.log("QUERY", data._id);
-  dispatch(getProductById(ProductID));
-
-  // useEffect(() => {
-  //   refresh;
-  // }, []);
+  const fetchProductById = async () => {
+    await dispatch(getProductById(ProductID));
+  };
+  useEffect(() => {
+    fetchProductById();
+  }, []);
 
   const productById = useSelector((state) => state.products.productById);
   // console.log("productById", productById);
@@ -46,13 +50,21 @@ export default function ProductPage() {
                   onClick={async () => {
                     const product_id = productById?._id;
                     const user_id = userData?._id;
-                    await addCart(product_id, user_id);
+                    userData
+                      ? (await addCart(product_id, user_id)) &&
+                        router.push("/cartPage")
+                      : toast.error("SignIn to your Account to access Cart!");
                   }}
                 >
-                  <CartIcon customClass={"text-xl font-bold"} />
+                  <PiShoppingCartFill className={"text-xl font-bold"} />
                   ADD TO CART
                 </button>
-                <button className="flex items-center justify-center gap-2 text-[white] bg-[#fb641b] w-[50%] p-4 font-bold text-md">
+                <button
+                  className="flex items-center justify-center gap-2 text-[white] bg-[#fb641b] w-[50%] p-4 font-bold text-md"
+                  onClick={() => {
+                    toast.error("SignIn to your Account!");
+                  }}
+                >
                   <LightningIcon customClass={"text-lg font-bold"} />
                   BUY NOW
                 </button>
@@ -74,7 +86,7 @@ export default function ProductPage() {
               />
             </div>
             <Text
-              name={productById?.price}
+              name={"₹ " + productById?.price}
               customClass={"text-[30px] font-bold"}
             />
           </div>

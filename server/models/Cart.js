@@ -9,6 +9,8 @@ const cartSchema = new mongoose.Schema({
   spec: { type: String, required: true },
   user_id: { type: String, required: true },
   product_id: { type: String, required: true },
+  cartType: { type: String, required: true },
+  quantity: { type: String, required: true },
 });
 const Cart = mongoose.model("Cart", cartSchema);
 exports.Cart = Cart;

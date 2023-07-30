@@ -12,7 +12,7 @@ export default function ProductCard({ img, price, category, onclick }) {
       </div>
       <div className="flex flex-col items-center justify-center w-[100%]">
         <Text name={category} customClass={"text-sm"} />
-        <Text name={price} customClass={"text-sm font-bold"} />
+        <Text name={"₹ " + price} customClass={"text-sm font-bold"} />
       </div>
     </div>
   );

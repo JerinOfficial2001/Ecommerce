@@ -81,17 +81,17 @@ exports.updateProducts = async (req, res) => {
       spec: req.body.spec,
       array: req.body.array,
     };
-    if (req.body.image !== "") {
-      const imgID = singleProduct.image.public_id;
-      await cloudinary.uploader.destroy(imgID);
-    }
-    const newImg = await cloudinary.uploader.upload(req.body.image, {
-      upload_preset: "ecommerce",
-    });
-    data.image = {
-      public_id: newImg.public_id,
-      url: newImg.url,
-    };
+    // if (req.body.image !== "") {
+    //   const imgID = singleProduct.image.public_id;
+    //   await cloudinary.uploader.destroy(imgID);
+    // }
+    // const newImg = await cloudinary.uploader.upload(req.body.image, {
+    //   upload_preset: "ecommerce",
+    // });
+    // data.image = {
+    //   public_id: newImg.public_id,
+    //   url: newImg.url,
+    // };
     await Product.findByIdAndUpdate(req.params.id, data, {
       new: true,
     });
